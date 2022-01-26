@@ -1,0 +1,261 @@
+ <style>
+                .a-box {
+                    display: inline-block;
+                    width:300px;
+                    text-align: center;
+                  }
+                  
+                  .img-container {
+                      height: 230px;
+                      width: 200px;
+                      overflow: hidden;
+                      border-radius: 0px 0px 20px 20px;
+                      display: inline-block;
+                      
+                  }
+                  
+                  .img-container img {
+                      
+                      height: 150px;
+                      background-color: #ec6767;
+                      margin-top: 20%;
+                      
+                  }
+                  
+                  .inner-skew {
+                      display: inline-block;
+                      border-radius: 20px;
+                      overflow: hidden;
+                      padding: 0px;
+                     
+                      font-size: 0px;
+                      margin: 30px 0px 0px 0px;
+                      background: #ec6767;
+                      height: 250px;
+                      width: 200px;
+                  }
+                  
+                  .text-container {
+                    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+                    padding: 120px 20px 20px 20px;
+                    border-radius: 20px;
+                    background: #fff;
+                    margin: -120px 0px 0px 0px;
+                    line-height: 19px;
+                    font-size: 14px;
+                  }
+                  
+                  .text-container h3 {
+                    margin: 20px 0px 10px 0px;
+                    color: #000000;
+                    font-size: 18px;
+                  }
+            </style>
+
+            <div class="row" style="margin-top: 50px;">
+                <div class="col-3" style="margin-bottom: 10px;">
+                    <a href="{% url 'SpareParts:SparePartsOrderList' %}" >
+                        <div class="a-box">
+                            <div class="img-container">
+                            <div class="img-inner">
+                                <div class="inner-skew">
+                                <img src="/static/assets/images/order1.png">
+                                </div>
+                            </div>
+                            </div>
+                            <div class="text-container">
+                                    <h3 >طلبيات قطع الغيار</h3>
+                                    
+                                </div>
+                            </div>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="{% url 'SpareParts:SparePartsSupplierList' %}">
+                        <div class="a-box">
+                            <div class="img-container">
+                              <div class="img-inner">
+                                <div class="inner-skew">
+                                  <img src="/static/assets/images/order2.png">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="text-container">
+                              <h3>موردين قطع الغيار</h3>
+                              
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="{% url 'SpareParts:SparePartsWarehouseList' %}">
+
+                        <div class="a-box">
+                            <div class="img-container">
+                              <div class="img-inner">
+                                <div class="inner-skew">
+                                  <img src="/static/assets/images/order3.png">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="text-container">
+                              <h3>مخازن قطع الغيار</h3>
+                              
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="{% url 'SpareParts:SparePartsNameList' %}">
+
+                        <div class="a-box">
+                            <div class="img-container">
+                              <div class="img-inner">
+                                <div class="inner-skew">
+                                  <img src="/static/assets/images/order4.png">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="text-container">
+                              <h3>اصناف قطع الغيار</h3>
+                              
+                            </div>
+                        </div>
+                    </a>
+                </div>
+               
+            </div>
+
+            
+
+            <div class="row" style="margin-top: 50px;">
+                <div class="col-3">
+                    <a href="{% url 'Machines:MachinesOrdersList' %}">
+                        <div class="a-box">
+                            <div class="img-container">
+                              <div class="img-inner">
+                                <div class="inner-skew">
+                                  <img src="/static/assets/images/order1.png">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="text-container">
+                              <h3>طلبيات المكينات</h3>
+                              
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="{% url 'Machines:suppliers_active_list' %}">
+
+                        <div class="a-box">
+                            <div class="img-container">
+                              <div class="img-inner">
+                                <div class="inner-skew">
+                                  <img src="/static/assets/images/order2.png">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="text-container">
+                              <h3> موردين المكينات</h3>
+                              
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="{% url 'Machines:warehouses_active_list' %}">
+
+                        <div class="a-box">
+                            <div class="img-container">
+                              <div class="img-inner">
+                                <div class="inner-skew">
+                                  <img src="/static/assets/images/order3.png">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="text-container">
+                              <h3>مخازن المكينات</h3>
+                              
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="{% url 'Machines:names_active_list' %}">
+                        <div class="a-box">
+                            <div class="img-container">
+                              <div class="img-inner">
+                                <div class="inner-skew">
+                                  <img src="/static/assets/images/order4.png">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="text-container">
+                              <h3>اصناف المكينات</h3>
+                              
+                            </div>
+                        </div>
+
+                    </a>
+                </div>
+               
+            </div>
+            <div class="row" style="margin-top: 50px;">
+                <div class="col-3">
+                    <a href="{% url 'Treasury:WorkTreasuryList' %}">
+
+                        <div class="a-box">
+                            <div class="img-container">
+                              <div class="img-inner">
+                                <div class="inner-skew">
+                                  <img src="/static/assets/images/order6.png">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="text-container">
+                              <h3>خزائن العمل</h3>
+                              
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="{% url 'Treasury:HomeTreasuryList' %}">
+
+                        <div class="a-box">
+                            <div class="img-container">
+                              <div class="img-inner">
+                                <div class="inner-skew">
+                                  <img src="/static/assets/images/order5.png">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="text-container">
+                              <h3>خزائن البيت</h3>
+                              
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="{% url 'Treasury:BankAccountList' %}">
+
+                        <div class="a-box">
+                            <div class="img-container">
+                              <div class="img-inner">
+                                <div class="inner-skew">
+                                  <img src="/static/assets/images/order7.png">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="text-container">
+                              <h3>الحسابات البنكية</h3>
+                              
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+            </div>

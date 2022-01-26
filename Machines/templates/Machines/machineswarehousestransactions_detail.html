@@ -1,0 +1,120 @@
+<style>
+    .expand_modal {
+        max-width: 100%;
+        margin: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100vh;
+        display: flex;
+        position: fixed;
+        z-index: 100000;
+    }
+</style>
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">
+            <b class="font-weight-bold text-center"> {{ title }}</b>
+        </div>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="maximize"
+            onclick="
+            if (document.getElementById('expand_modal').value === '0'){
+                document.getElementById('expand_modal').value = 1;
+                document.getElementById('action_modal2').className = 'modal-dialog expand_modal';
+                document.getElementById('sub_modal2').className = 'modal-dialog modal-lg expand_modal';
+            }
+            else {
+                document.getElementById('expand_modal').value = 0;
+                document.getElementById('action_modal2').className = 'modal-dialog';
+                document.getElementById('sub_modal2').className = 'modal-dialog modal-lg';
+            }
+
+            "
+            >
+                <input type="number" value="0" id="expand_modal" hidden>
+                <i class="fas fa-expand"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-dismiss="modal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+            
+{% load custom_machine_tags %}
+
+
+              
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card" >
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-centered   ">
+                                        <thead class="thead-light text-center">
+                                            <tr>
+                                                <th scope="col" >#</th>
+                                                <th scope="col">
+                                                    <i class="far fa-file-alt"></i>
+                                                    المنتج
+                                                </th>
+                                                <th scope="col">
+                                                    <i class="fas fa-calculator"></i>
+                                                    الكمية
+                                                </th>
+                                                <th scope="col">
+                                                    <i class="fas fa-dollar-sign"></i>
+                                                    سعر الشراء
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center ">
+                                          {% for x in object_list  %}
+                                          <tr>
+                                            <td>
+                                                
+                                                    <span class="avatar-title rounded">
+                                                        {{forloop.counter}}
+                                                    </span>
+                                                
+                                            </td>
+                                            <td>
+                                                <h5 class="font-size-16 badge badge-warning">
+                                                        <i class="far fa-file-alt"></i>
+                                                    {{x.item}}
+                                                </h5>
+                                                <p class="text-muted mb-0"></p>
+                                            </td>
+                                            <td>
+                                                <h5 class="badge  badge-info font-size-16">
+                                                    <i class="fas fa-calculator"></i>
+                                                    {{x.quantity}}
+                                                </h5>
+                                                
+                                            </td>
+                                            <td>
+                                                <h4 class="badge badge-danger">
+                                                    <i class="fas fa-dollar-sign"></i>
+                                                    {{x.purchase_cost|floatformat:'2'}}
+                                                </h4>
+                                                
+                                            </td>
+                                           
+                                           
+                                        </tr>
+                                      
+                                          {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                {% if is_paginated %}
+                                {% include "components/paginator.html" %}
+                                {% endif %}
+                
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+

@@ -1,0 +1,290 @@
+
+<header id="page-topbar">
+    <div class="navbar-header">
+        <div class="d-flex">
+            <!-- LOGO -->
+            <div class="navbar-brand-box">
+                <a href="/" class="logo logo-dark">
+                    <span class="logo-sm">
+                        <img src="/static/assets/images/new.png" alt="" height="22">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="/static/assets/images/new.png" alt="" height="17">
+                    </span>
+                </a>
+
+                <a href="/" class="logo logo-light">
+                    <span class="logo-sm">
+                        <img src="/static/assets/images/1logo.png" alt="" height="30">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="/static/assets/images/main_logo.png" alt="" height="30">
+                    </span>
+                </a>
+            </div>
+
+            <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
+                <i class="fa fa-fw fa-bars"></i>
+            </button>
+            
+        </div>
+
+        <div class="d-flex">
+
+           
+
+            
+            
+            <div class="dropdown d-none d-lg-inline-block ml-1">
+                <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="modal" data-target="#search_modal">
+                    <i class="bx bx-search-alt"></i>                
+                </button>
+            </div>
+
+            <div class="dropdown d-none d-lg-inline-block ml-1">
+                <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
+                    <i class="bx bx-fullscreen"></i>
+                </button>
+            </div>
+
+            <!-- notifeaction item -->
+            <div class="dropdown d-inline-block">
+                <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    
+                    
+                    {% if notification_count %}
+                        
+                        <i class="bx bx-bell bx-tada"></i>
+                        <span class="badge badge-danger badge-pill">{{notification_count}}</span>
+                    {% else %}
+                        <i class="bx bx-bell "></i>    
+                    {% endif %}
+                        
+                   
+                </button>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
+                    aria-labelledby="page-header-notifications-dropdown">
+                    <div class="p-3">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h6 class="m-0" key="t-notifications"> الأشعارات </h6>
+                            </div>
+                            <!-- <div class="col-auto">
+                                <a href="#!" class="small" key="t-view-all">عرض الجميع</a>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div data-simplebar style="max-height: 230px;">
+                        
+                        {% for x in notifay %}
+                        
+                        {% if x.machine_order %}
+                            <a href="{% url 'Machines:MachinesOrdersDetail' x.machine_order.id %}" onclick="send_ajax('{{x.id}}')" class="text-reset notification-item">
+                                <div class="media">
+                                    <div class="avatar-xs mr-3">
+                                        <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                            
+                                            {% if x.read == False %}
+                                            <i class='bx bx-bell bx-tada bx-sm'   ></i>
+                                            {% else %}
+                                            <i class='bx bx-bell bx-sm '></i>
+
+                                            {% endif %}
+                                                
+                                        </span>
+                                    </div>
+                                    <div class="media-body">
+                                        <input id="machine" type="number" value="{{x.id}}" hidden>
+                                    
+                                        <h6 class="mt-0 mb-1" key="t-your-order">{{x.message}}</h6>
+                                        <div class="font-size-12 text-muted">
+                                            <p
+                                            {% if x.read == False %}
+                                            class="mb-1 badge badge-danger font-size-12"
+                                            {% elif x.read == True %}
+                                            class="mb-1 badge badge-secondary font-size-12"
+                                            
+                                            {% endif %} 
+                                            
+                                            key="t-grammer">
+
+                                            
+                                            {% if x.created_at == today %}
+                                                
+                                                {% if x.notifeaction_type == 1   %}
+                                                اليوم هو معاد دفع العربون
+                                                {% elif  x.notifeaction_type == 2 %}
+                                                اليوم هو معاد دفع باقي العربون
+                                                {% elif  x.notifeaction_type == 3 %}
+                                                اليوم هو معاد  استلام البضاعة
+                                                {% elif  x.notifeaction_type == 4 %}
+                                                اليوم هو معاد  استلام البضاعة
+                                                {% endif %}
+                                                
+                                            {% elif  x.created_at == tomorrow %}
+                                                {% if x.notifeaction_type == 1   %}
+                                                غداً هو معاد دفع العربون
+                                                {% elif  x.notifeaction_type == 2 %}
+                                                غداً هو معاد دفع باقي العربون
+                                                {% elif  x.notifeaction_type == 3 %}
+                                                غداً هو معاد  استلام البضاعة
+                                                {% elif  x.notifeaction_type == 4 %}
+                                                غداً هو معاد  استلام البضاعة
+                                                {% endif %}
+                                            
+                                            {% endif %}
+                                        </p>
+                                            <br>
+                                            <p class="mb-0 badge badge-primary"><i class="mdi mdi-clock-outline"></i> <span key="t-min-ago">{{x.created_at|date:'Y-m-d'}}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                        {% elif x.spare_order %}
+                            <a href="{% url 'SpareParts:SparePartsOrderDetail' x.spare_order.id %}" onclick="send_ajax('{{x.id}}')" class="text-reset notification-item">
+                                <div class="media">
+                                    <div class="avatar-xs mr-3">
+                                        <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                            
+                                            {% if x.read == False %}
+                                            <i class='bx bx-bell bx-tada bx-sm'   ></i>
+                                            {% else %}
+                                            <i class='bx bx-bell bx-sm '></i>
+
+                                            {% endif %}
+                                                
+                                        </span>
+                                    </div>
+                                    <div class="media-body">
+                                        <input id="machine" type="number" value="{{x.id}}" hidden>
+                                    
+                                        <h6 class="mt-0 mb-1" key="t-your-order">{{x.message}}</h6>
+                                        <div class="font-size-12 text-muted">
+                                            <p
+                                            {% if x.read == False %}
+                                            class="mb-1 badge badge-danger font-size-12"
+                                            {% elif x.read == True %}
+                                            class="mb-1 badge badge-secondary font-size-12"
+                                            
+                                            {% endif %} 
+                                            
+                                            key="t-grammer">
+
+                                            
+                                            {% if x.created_at == today %}
+                                                
+                                                {% if x.notifeaction_type == 5   %}
+                                                اليوم هو معاد دفع العربون
+                                                {% elif  x.notifeaction_type == 6 %}
+                                                اليوم هو معاد دفع باقي العربون
+                                                {% elif  x.notifeaction_type == 7 %}
+                                                اليوم هو معاد  استلام البضاعة
+                                                {% elif  x.notifeaction_type == 8 %}
+                                                اليوم هو معاد  استلام البضاعة
+                                                {% endif %}
+                                                
+                                            {% elif  x.created_at == tomorrow %}
+                                                {% if x.notifeaction_type == 5   %}
+                                                غداً هو معاد دفع العربون
+                                                {% elif  x.notifeaction_type == 6 %}
+                                                غداً هو معاد دفع باقي العربون
+                                                {% elif  x.notifeaction_type == 7 %}
+                                                غداً هو معاد  استلام البضاعة
+                                                {% elif  x.notifeaction_type == 8 %}
+                                                غداً هو معاد  استلام البضاعة
+                                                {% endif %}
+                                            
+                                            {% endif %}
+                                        </p>
+                                            <br>
+                                            <p class="mb-0 badge badge-primary"><i class="mdi mdi-clock-outline"></i> <span key="t-min-ago">{{x.created_at|date:'Y-m-d'}}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endif %}
+                            
+                        
+                        {% endfor %}
+                        
+                    </div>
+                    <div class="p-2 border-top">
+                        <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="javascript:void(0)">
+                            </i> <span key="t-view-more">الأشعارات</span> 
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+
+                function send_ajax(id){
+              
+                  $.ajax({
+                    type : "POST",
+                    url : "{% url 'Core:Read' %}",
+                    data : {
+                      id : id,
+                      order: $('#order').val(),
+                      csrfmiddlewaretoken: '{{ csrf_token }}',
+                      dataType: "json",
+                    },
+              
+                  });
+              
+                };
+              
+              </script>
+
+            <!-- user item -->
+            <div class="dropdown d-inline-block">
+                <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img class="rounded-circle header-profile-user" src="/static/assets/images/user.png"
+                        alt="Header Avatar">
+                    <span class="d-none d-xl-inline-block ml-1" key="t-henry">{{request.user}}</span>
+                    <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <!-- item-->
+
+                    {% if info %}
+                    
+                    {% for x in info %}
+                        <a class="dropdown-item" data-toggle="modal" data-target="#action_modal" 
+                        href="{% url 'Core:SystemInfoUpdate' x.id %}">
+                            
+                        <i class='bx bx-info-circle font-size-16 align-middle mr-1' ></i>
+                            <span key="t-profile">بيانات النظام</span>
+                        </a>
+                        {% endfor %}
+                        {% else %}
+                        <a class="dropdown-item" data-toggle="modal" data-target="#action_modal" 
+                        href="{% url 'Core:SystemInfoCreate'%}">
+                            <i class="bx bx-user font-size-16 align-middle mr-1"></i> 
+                            <span key="t-profile">بيانات النظام</span>
+                        </a>
+                        {% endif %}
+                        
+                    <a class="dropdown-item" href="{% url 'Treasury:WorkTreasuryList' %}"><i class="bx bx-wallet font-size-16 align-middle mr-1"></i> <span key="t-my-wallet">الخزينة</span></a>
+                    
+                    {% if request.user.is_staff %}
+                        <a class="dropdown-item d-block" href="{% url 'Auth:ChangePassword' %}" data-target="#action_modal" data-toggle="modal">
+                            <i class="bx bx-wrench font-size-16 align-middle mr-1"></i>
+                            <span key="t-settings">تغير كلمة المرور</span>
+                        </a>         
+                    {% endif %}
+                        
+                    
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger" href="{% url 'Auth:logout'%}"><i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> <span key="t-logout">تسجيل الخروج</span></a>
+                </div>
+            </div>
+
+           
+
+        </div>
+    </div>
+</header>

@@ -1,0 +1,269 @@
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fulid">
+
+            <div class="row">
+                <div class="col-12">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show text-center" role="alert">
+                        <i class="mdi mdi-check-all mr-2"></i>
+                        {{ message|safe }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                        <h4 class="mb-0 font-size-18">الرئيسية</h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">لوحة التحكم</a></li>
+                                <li class="breadcrumb-item active">لوحة التحكم</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <style>
+                .mycard1 {
+                    height:200px;
+                    display: flex;
+                    flex-direction:column;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    border-radius: 17px;
+                    background: #104c6f;
+                    
+                }
+                .mycard1:hover{
+                    background: #f46a6a;
+                }
+                .mycard1 i{
+                    color:white;
+                }
+                .mycard1 h3{
+                    color: white;
+                    font-size: x-large;
+                    margin-top: 10px;
+
+                }
+                
+            </style>
+            <div class="row" >
+                {% if request.user.has_access_to_spareParts == True %}
+                    <div class="col-lg-6">
+                        <div class=" mycard1 ">
+                            <i class="fas fa-file-invoice-dollar fa-7x"></i>
+                            <div>
+                                <h3> مبيعات قطع الغيار</h3>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-lg-6">
+                        <div class=" mycard1">
+                            <i class="fas fa-lock fa-7x"></i>
+                            <div>
+                                <h3> مبيعات قطع الغيار</h3>
+                            </div>
+                            <div>
+                                <span class="badge badge-danger">هذ الجزء غير متاح للك</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                    
+                
+                
+                {% if request.user.has_access_to_machine == True %}
+                    <div class="col-lg-6">
+                        <div class="mycard1">
+                            <i class="fas fa-file-invoice-dollar fa-7x"></i>
+                        <div>
+                                <h3>مبيعات المكنيات</h3>
+                        </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-lg-6">
+                        <div class="mycard1">
+                            <i class="fas fa-lock fa-7x"></i>
+                            <div>
+                                    <h3>مبيعات المكنيات</h3>
+                            </div>
+                            <div>
+                                <span class="badge badge-danger">هذ الجزء غير متاح للك</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="row"style="margin-top:10px;" >
+                <div class="col-lg-4">
+                    <a href="{% url 'SpareParts:SparePartsOrderList' %}">
+                        <div class=" mycard1">
+                            <i class="fas fa-cart-arrow-down fa-7x"></i>
+                            <div>
+                                <h3>طلبيات قطع الغيار</h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-lg-4">
+                   <a href="{% url 'Machines:MachinesOrdersList' %}">
+                        <div class="mycard1">
+                            <i class="fas fa-cart-arrow-down fa-7x"></i>
+                            <div>
+                                <h3>طلبيات  المكينات</h3>
+                            </div>
+                        </div>
+                   </a>
+                </div>
+
+                <div class="col-lg-2">
+                   <a href="{% url 'SpareParts:SparePartsNameList' %}">
+                        <div class="mycard1">
+                            <i class="fas fa-boxes fa-7x"></i>
+                            <div>
+                                <h3>اصناف  قطع الغيار</h3>
+                            </div>
+                        </div>
+                   </a>
+                </div>
+
+                <div class="col-lg-2">
+                    <a href="{% url 'Machines:names_active_list' %}">
+                        <div class="mycard1">
+                            <i class="fas fa-boxes fa-7x"></i>
+                            <div>
+                                <h3>اصناف  المكينات </h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+                
+            </div>
+
+            <div class="row" style="margin-top:10px;">
+                
+                <div class="col-lg-3">
+                   <a href="{% url 'SpareParts:SparePartsWarehouseList' %}">
+                        <div class=" mycard1">
+                            <i class="fas fa-warehouse fa-7x"></i>
+                            <div>
+                                <h3>مخزن قطع الغيار</h3>
+                            </div>
+                    </div>
+                   </a>
+                </div>
+
+                <div class="col-lg-3">
+                    <a href="{% url 'Machines:warehouses_active_list' %}">
+                        <div class="mycard1">
+
+                            <i class="fas fa-warehouse fa-7x"></i>
+                           <div>
+                                <h3>مخزن  المكينات</h3>
+                           </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-lg-4">
+                    <a href="{% url 'Treasury:WorkTreasuryList' %}">
+                        <div class="mycard1">
+                            <i class="fas fa-dollar-sign fa-7x"></i>
+                            <div>
+                                <h3>الخزينة</h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-lg-2">
+                    <a href="#" data-toggle="modal" data-target="#search_modal">
+                        <div class="mycard1">
+                            <i class="fas fa-search fa-7x"></i>
+                            <div>
+                                <h3>البحث</h3>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+                
+                
+            </div>
+
+            <div class="row" style="margin-top:10px;">
+                
+                <div class="col-lg-3">
+                    <a href="{% url 'SpareParts:SparePartsSupplierList' %}">
+
+                        <div class=" mycard1">
+                            <i class="fas fa-people-carry fa-7x"></i>
+                            <div>
+                                <h3>موردين قطع الغيار</h3>
+                            </div>
+                       </div>
+                    </a>
+                </div>
+
+                <div class="col-lg-3">
+                    <a href="{% url 'Machines:suppliers_active_list' %}">
+                        
+                        <div class="mycard1">
+                            <i class="fas fa-people-carry fa-7x"></i>
+                           <div>
+                                <h3>موردين المكينات</h3>
+                           </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-lg-6">
+                    <a {% if request.user.is_superuser %}
+                    href="{% url 'Auth:Users' %}"
+                    data-target="#sub_modal" data-toggle="modal"
+                    {% else %}
+                    href = "#"
+                    {% endif %}>
+                        <div class="mycard1">
+                            <i class="fas fa-users fa-7x"></i>
+                            <div>
+                                <h3>المستخدمين</h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+               
+                
+                
+            </div>
+
+           
+
+            <!-- end row -->
+        </div>
+        <!-- container-fluid -->
+    </div>
+    
+</div>

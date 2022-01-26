@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+{% load custom_machine_tags %}
+
+{% block main %}
+
+    <div class="main-content">
+
+      <div class="page-content">
+          <div class="container-fluid">
+           
+                <div class="row">
+                    <div class="col-12"> {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show text-center" role="alert">
+                            <i class="mdi mdi-check-all mr-2"></i>
+                            {{ message|safe }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        {% endfor %}
+
+
+                      {% endif %}
+                    </div>
+                   
+                </div>
+              
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-flex align-items-center justify-content-between">
+
+                                <h4 class="mb-0">
+                                    {% if message == "active" %}
+                                    طلبيات المكن
+                                    {% else %}
+                                    سلة مهملات طلبيات المكن
+                                    {% endif %}
+
+                                    <a class="badge badge-success" style="font-size:small;" href="{% url 'Machines:MachinesOrdersCreate' %}" data-toggle="modal" data-target="#sub_modal">
+                                        <i class="fas fa-plus-square fx-2"></i>
+                                    </a>
+
+                                    <a class="badge badge-info" style="font-size:small;" href="{% url 'Machines:MachinesOrdersList' %}">
+                                       <i class="fas fa-list-ul"></i>
+                                    </a>
+
+                                    <a  class="badge badge-danger" style="font-size:small;" href="{% url 'Machines:MachinesOrdersTrashList' %}">
+                                            <i class="fas fa-trash"></i>
+                                    </a>
+                                </h4>
+
+                                <span class="badge badge-dark font-size-15"> الاجمالي : {{count}} طلبية </span>
+
+
+                           
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
+
+                                    {% if message == "active" %}
+                                    <li class="breadcrumb-item active">طلبيات المكن</li>
+                                    {% else %}
+                                    <li class="breadcrumb-item active">طلبيات المكن المحذوفة</li>
+
+                                    {% endif %}
+                                </ol>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                {% if object_list %}
+                <div class="row">
+                {% for x in object_list  %}
+                {% order_op1 x.id as has_op1 %}
+                {% order_op2 x.id as has_op2 %}
+                {% order_op3 x.id as has_op3 %}
+                {% order_op4 x.id as has_op4 %}
+                {% order_op5 x.id as has_op5 %}
+                {% order_products x.id as has_products %}
+                {% order_products_val x.id as products_val %}
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                    <div class="card mini-stats-wid">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-6 col-lg-6 col-md-6">
+                                    <div class="text-lg-center">
+                                        <div class="avatar-sm mr-3 mx-lg-auto mb-4 float-left float-lg-none" style="margin-top: 12%;">
+                                            <span class="avatar-title rounded-circle bg-soft-primary text-primary font-size-16">
+                                                <img src="/static/assets/images/vector/Invoice.png" alt="" width="100px%">
+                                            </span>
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div>
+                                        <a href="{% url 'Machines:MachinesOrdersDetail' x.id %}" class="d-block text-primary mb-2">فاتورة #{{x.order_number}}</a>
+                                        
+                                        <ul class="list-inline mb-0">
+                                            <li class="list-inline-item mr-3">
+                                                <h5 class="font-size-14" data-toggle="tooltip" data-placement="top" title="" data-original-title="Amount"><i class="bx bx-money mr-1 text-primary"></i> $
+                                                    {% if products_val %}
+                                                    {{ products_val }}
+                                                    {% else %}
+                                                    0.0
+                                                    {% endif %}
+                                                </h5>
+                                            </li>
+                                            <br>
+                                            <li class="list-inline-item">
+                                                <h5 class="font-size-14" data-toggle="tooltip" data-placement="top" title="" data-original-title="Due Date"><i class="bx bx-calendar mr-1 text-primary"></i>{{x.order_date|date:'Y-m-d'}}</h5>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card-footer bg-transparent ">
+                                            <div class="contact-links d-flex justify-content-center font-size-20">
+                                                <div class="mr-3">
+                                                    <a href="{% url 'Machines:MachinesOrdersDetail' x.id %}"  data-placement="top" title="" data-original-title="Message">
+                                                        <span class="badge badge-dark"><i class='bx bx-area'></i>تفاصيل</span>
+                                                   </a>
+                                                </div>
+                                                  {% if message == "active" %}
+
+                                                  <div class="mr-3">
+                                                           <a
+                                                               {% if has_op3 %}
+                                                                href="#"
+                                                                {% else %}
+                                                               href="{% url 'Machines:MachinesOrdersUpdate' x.id %}" data-toggle="modal" data-target="#sub_modal"
+                                                                {% endif %}
+                                                           >
+                                                                {% if has_op3 %}
+                                                               <span class="badge badge-info" style="text-decoration: line-through;" data-placement="top" title="لايمكن التعديل .. تم استلام الفاتورة"><i class='bx bx-edit' ></i>تعديل</span>
+                                                                {% else %}
+                                                               <span class="badge badge-info"><i class='bx bx-edit' ></i>تعديل</span>
+                                                                {% endif %}
+                                                          </a>
+                                                       </div>
+
+                                                  <div class="">
+                                                          <a
+                                                          {% if has_products %}
+                                                          href="#"
+                                                          {% else %}
+                                                          href="{% url 'Machines:MachinesOrdersDelete' x.id %}" data-toggle="modal" data-target="#action_modal"
+                                                          {% endif %}
+                                                          >
+
+                                                          {% if has_products %}
+                                                            <span class="badge badge-danger" style="text-decoration: line-through;" data-placement="top" title="لايمكن الحذف .. الفانورة تحتوي علي منتجات"><i class='bx bxs-trash'  ></i>حذف</span>
+                                                          {% else %}
+                                                            <span class="badge badge-danger"><i class='bx bxs-trash'  ></i>حذف</span>
+                                                          {% endif %}
+
+
+                                                          </a>
+                                                      </div>
+                                                  {% else %}
+                                                       <div class="mr-3">
+                                                              <a href="{% url 'Machines:MachinesOrdersRestore' x.id %}" data-toggle="modal" data-target="#action_modal" data-placement="top" title="" data-original-title="Message">
+                                                                  <span class="badge badge-info"><i class='bx bx-redo '></i> استرجاع
+                                                                  </span>
+                                                              </a>
+                                                      </div>
+
+                                                      <div class="">
+                                                          <a href="{% url 'Machines:MachinesOrdersSuperDelete' x.id %}" data-toggle="modal" data-target="#action_modal" data-placement="top" title="" data-original-title="Profile">
+                                                              <span class="badge badge-danger"><i class='bx bxs-trash '   ></i> حذف نهائي </span>
+
+                                                          </a>
+                                                      </div>
+                                                  {% endif %}
+                                              </div>
+                                        </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="px-4 py-3 border-top text-center">
+                            <ul class="list-inline mb-0">
+                                {% if has_op5 %}
+                                <div class="mini-stat-icon bg-success align-self-center">
+                                    <span class="badge badge-success font-size-16">تم دفع ضرائب البضاعة</span>
+                                </div>
+                                {% elif has_op4 %}
+                                <div class="mini-stat-icon bg-primary align-self-center">
+                                    <span class="badge badge-primary font-size-16">تم استلام البضاعة</span>
+                                </div>
+                                {% elif has_op3 %}
+                                <div class="mini-stat-icon bg-info align-self-center">
+                                    <span class="badge badge-info font-size-16">تم تخليص البضاعة</span>
+                                </div>
+                                {% elif has_op2 %}
+                                <div class="mini-stat-icon bg-warning align-self-center">
+                                    <span class="badge badge-warning font-size-16">تم دفع قيمة الفاتورة بالكامل</span>
+                                </div>
+                                {% elif has_op1 %}
+                                <div class="mini-stat-icon bg-danger align-self-center">
+                                    <span class="badge badge-danger font-size-16">تم دفع العربون </span>
+                                </div>
+                                {% else %}
+                                <div class="mini-stat-icon bg-dark align-self-center">
+                                    <span class="badge badge-dark font-size-16">لم تتم اي عملية بعد </span>
+                                </div>
+                                {% endif %}
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                
+                {% endfor %}
+
+
+              </div>
+
+                {% if is_paginated %}
+                {% include "components/paginator.html" %}
+                {% endif %}
+
+                {% else %}
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="text-center mb-5 mt-5">
+                            <h1 class="display-2 font-weight-medium">4<i class="bx bx-buoy bx-spin text-primary display-3"></i>4</h1>
+                            <h4 class="text-uppercase">
+                                {% if message == "active" %}
+                                لا توجد بيانات
+                                {% else %}
+                                لا توجد بيانات محذوفة
+                                {% endif %}
+                            </h4>
+                            <div class="mt-3 text-center">
+                                
+                                {% if message == "active" %}
+                                    <a class="btn btn-primary waves-effect waves-light" href="{% url 'Machines:MachinesOrdersCreate' %}" data-toggle="modal" data-target="#sub_modal">اضافة بيانات</a>
+                                
+                                {% endif %}
+                                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-12 d-flex justify-content-center ">
+                
+                        <img src="/static/assets/images/error-img.png" width="400px" height="188px" alt="" class="img-fluid" >
+                
+                    </div>
+                </div>
+
+                {% endif %}
+
+          </div>
+      </div>
+  </div>
+{% endblock main %}
+

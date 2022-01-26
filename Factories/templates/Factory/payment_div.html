@@ -1,0 +1,31 @@
+<div class="table-responsive">
+    <table class="table table-dark table-centered table-nowrap text-center">
+        <thead class="thead-dark">
+            <tr>
+                <th>م</th>
+                <th>التاريخ</th>
+                <th>المبلغ</th>
+                <th>المسئول</th>
+                <th>المستلم</th>
+                <th><i class="fas fa-cogs"></i></th>
+            </tr>
+        </thead>
+        <tbody >
+        {% for x in payment  %}
+            <tr style="text-align: center;">
+                <td>{{forloop.counter}}</td>
+                <td><span class="badge badge-danger"><i class="fas fa-calendar-alt"></i> {{x.date|date:'Y-m-d'}}</span></td>
+                <td><i class="fas fa-dollar-sign"></i> {{x.price}}</td>
+                <td><i class="fas fa-user-tie"></i> {{x.admin}} </td>
+                <td><i class="fas fa-user"></i> {{x.recipient}} </td>
+                
+                <td>
+                    <a href="{% url 'Factories:FactoryPaymentUpdate' x.id %}" class="mr-3 text-warning" data-toggle="modal" data-target="#sub_modal" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
+                    <a onclick="PaymentDelete('{{x.id}}')" style="cursor: pointer;" class="text-danger" ><i class="mdi mdi-close font-size-18"></i></a>
+                </td>
+                
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
