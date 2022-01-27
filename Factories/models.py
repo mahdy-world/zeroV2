@@ -1,7 +1,7 @@
-from email.policy import default
-from tabnanny import verbose
+from datetime import date
+
 from django.db import models
-from Auth.models import User
+
 from Products.models import Product
 
 # Create your models here.
@@ -14,7 +14,7 @@ class Factory(models.Model):
     machine_count = models.IntegerField(null=True , verbose_name="عدد المكن")
     phone = models.CharField(null=True, blank=True, max_length=12 , verbose_name="رقم الموبيل")
     active = models.BooleanField(default=True , verbose_name="يعمل")
-    start_date = models.DateField(null=True , verbose_name="تاريخ البداية")
+    date = models.DateField(null=True, verbose_name="تاريخ البداية", default=date.today)
     deleted = models.BooleanField(default=False)
     
     def __str__(self):
@@ -26,7 +26,7 @@ class Payment(models.Model):
     factory = models.ForeignKey(Factory , on_delete=models.CASCADE , verbose_name="المصنع")
     recipient = models.CharField(max_length=50 , verbose_name="المستلم")
     admin = models.CharField(max_length=50 , verbose_name="المسئول")
-    date = models.DateField(verbose_name="التاريخ")
+    date = models.DateField(null=True, verbose_name="التاريخ", default=date.today)
     
     def __str__(self):
         return self.factory.name
@@ -35,12 +35,12 @@ class Payment(models.Model):
 
 class FactoryOutSide(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ العملية")
-    date = models.DateField(null=True, verbose_name="التاريخ")
+    date = models.DateField(null=True, verbose_name="التاريخ", default=date.today)
     factory = models.ForeignKey(Factory, on_delete=models.CASCADE, verbose_name="المصنع")
     number = models.IntegerField(null=True, blank=True, verbose_name="الرقم")
     weight = models.FloatField(null=True, blank=True, verbose_name="الوزن جرام")
     color = models.CharField(null=True, max_length=50, blank=True, verbose_name="اللون")
-    percent_loss = models.FloatField(null=True, default =2, blank=True, verbose_name="نسبة الهالك")
+    percent_loss = models.FloatField(null=True, blank=True, verbose_name="نسبة الهالك")
     weight_after_loss = models.FloatField(null=True, blank=True, verbose_name="الوزن بعد نسبة الهالك")
     admin = models.CharField(null=True, max_length=50, blank=True, verbose_name='المسئول')
     
@@ -50,7 +50,7 @@ class FactoryOutSide(models.Model):
      
 class FactoryInSide(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ العملية")
-    date = models.DateField(null=True, verbose_name="التاريخ")
+    date = models.DateField(null=True, verbose_name="التاريخ", default=date.today)
     factory = models.ForeignKey(Factory, on_delete=models.CASCADE, verbose_name="المصنع")
     color = models.CharField(null=True, max_length=50, blank=True, verbose_name="اللون")
     product = models.CharField(max_length=50, verbose_name="الموديل")

@@ -31,7 +31,7 @@ class FactoryPaymentForm(forms.ModelForm):
         fields = ['date', 'price', 'admin', 'recipient']
         model = Payment
         widgets = {
-            'date' : forms.TextInput(attrs={'type':'date', 'class':'form-control', 'min':'1', 'placeholder':'تاريخ السحب...', 'id':'date'}),
+            'date' : forms.TextInput(attrs={'type':'date', 'class':'form-control',  'placeholder':'تاريخ السحب...', 'id':'date'}),
             'price' : forms.NumberInput(attrs={ 'class':'form-control', 'min':'1', 'placeholder':'المبلغ...', 'id':'price'}),
             'admin' : forms.TextInput(attrs={'class':'form-control', 'min':'1', 'placeholder':'المسئول...', 'id':'admin'}),
             'recipient' : forms.TextInput(attrs={'class':'form-control', 'min':'1', 'placeholder':'المستلم...', 'id':'recipient'}),
@@ -43,7 +43,7 @@ class FactoryOutSideForm(forms.ModelForm):
         fields = ['date', 'number', 'weight', 'color', 'percent_loss', 'weight_after_loss', 'admin' ]
         model = FactoryOutSide
         widgets = {
-            'date' : forms.TextInput(attrs={'type':'date', 'class':'form-control', 'min':'1', 'placeholder':'تاريخ الخروج...', 'id':'date'}),
+            'date' : forms.TextInput(attrs={'type':'date', 'class':'form-control',  'placeholder':'تاريخ الخروج...', 'id':'date'}),
             'number' : forms.NumberInput(attrs={ 'class':'form-control', 'min':'1', 'placeholder':'الرقم...', 'id':'number'}),
             'admin' : forms.TextInput(attrs={'class':'form-control', 'min':'1', 'placeholder':'المسئول...', 'id':'admin'}),
             'weight' : forms.NumberInput(attrs={'class':'form-control', 'min':'1', 'placeholder':'الوزن...', 'id':'weight'}),
@@ -60,7 +60,7 @@ class FactoryInSideForm(forms.ModelForm):
                   'total_account', 'admin']
         model = FactoryInSide
         widgets = {
-            'date' : forms.TextInput(attrs={'type':'date', 'class':'form-control', 'min':'1', 'placeholder':'تاريخ الاستلام...', 'id':'date'}),
+            'date' : forms.TextInput(attrs={'type':'date', 'class':'form-control',  'placeholder':'تاريخ الاستلام...', 'id':'date'}),
             'weight' : forms.NumberInput(attrs={ 'class':'form-control', 'min':'1', 'placeholder':'الوزن المستلم...', 'id':'weight'}),
             'color' : forms.TextInput(attrs={ 'class':'form-control', 'placeholder':' اللون...', 'id':'color'}),
             'product' : forms.TextInput(attrs={ 'class':'form-control', 'placeholder':' المنتج...', 'id':'product'}),

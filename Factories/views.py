@@ -235,25 +235,29 @@ def FactoryPaymentCreate(request):
     if request.is_ajax():
         factory_id = request.POST.get('id')
         factory = Factory.objects.get(id=factory_id)
-        print(factory)
+        
         date = request.POST.get('date')
         admin = request.POST.get('admin')
         recipient = request.POST.get('recipient')
         price = request.POST.get('price')
         
-        obj = Payment()
-        obj.factory = factory
-        obj.date = date
-        obj.admin = admin
-        obj.recipient = recipient
-        obj.price = price
-        obj.save()
-        
-        if obj:
+        if factory_id and date and admin and recipient and price:
+            obj = Payment()
+            obj.factory = factory
+            obj.date = date
+            obj.admin = admin
+            obj.recipient = recipient
+            obj.price = price
+            obj.save()
+            
+            if obj:
+                response = {
+                    'msg' : 1
+                }
+        else:
             response = {
-                'msg' : 'Send Successfully'
+                'msg' : 0
             }
-
         return JsonResponse(response)
     
     
@@ -284,7 +288,7 @@ class FactoryOutside(LoginRequiredMixin, DetailView):
         queryset = FactoryOutSide.objects.filter(factory=self.object)
         context = super().get_context_data(**kwargs)
         context['outSide'] = queryset.order_by('id')
-        context['title'] = 'الخارج لمصنع: ' + str(self.object)
+        context['title'] = 'المستلم من المصنع: ' + str(self.object)
         context['sum_weight'] = queryset.aggregate(weight=Sum('weight')).get('weight')
         context['sum_weight_after'] = queryset.aggregate(after=Sum('weight_after_loss')).get('after')
         context['form'] = FactoryOutSideForm(self.request.POST or None)
@@ -319,24 +323,29 @@ def FactoryOutSideCreate(request):
         weight_after_loss = request.POST.get('weight_after_loss')
         admin = request.POST.get('admin')
         
-        
-        obj = FactoryOutSide()
-        obj.factory = factory
-        obj.date = date
-        obj.admin = admin
-        obj.number = number
-        obj.weight = weight
-        obj.color = color
-        obj.percent_loss = percent_loss
-        obj.weight_after_loss = weight_after_loss
-        obj.save()
-        
-        if obj:
+        if factory_id and date and admin and number and weight and color and percent_loss and weight_after_loss:
+            obj = FactoryOutSide()
+            obj.factory = factory
+            obj.date = date
+            obj.admin = admin
+            obj.number = number
+            obj.weight = weight
+            obj.color = color
+            obj.percent_loss = percent_loss
+            obj.weight_after_loss = weight_after_loss
+            obj.save()
+            
+            if obj:
+                response = {
+                    'msg' : 1
+                }
+        else:
             response = {
-                'msg' : 'Send Successfully'
+                'msg' : 0
             }
-
-        return JsonResponse(response)  
+        return JsonResponse(response)
+        
+          
     
 
            
@@ -362,10 +371,12 @@ class FactoryInside(LoginRequiredMixin, DetailView):
     
     def get_context_data(self, **kwargs):
         queryset = FactoryInSide.objects.filter(factory=self.object)
+        outSide = FactoryOutSide.objects.filter(factory=self.object)
         context = super().get_context_data(**kwargs)
         context['inSide'] = queryset.order_by('id')
         context['title'] = 'الخارج لمصنع: ' + str(self.object)
         context['form'] = FactoryInSideForm(self.request.POST or None)
+        context['sum_outside'] = outSide.aggregate(out=Sum('weight_after_loss')).get('out')
         context['sum_weight'] = queryset.aggregate(weight=Sum('weight')).get('weight')
         context['sum_weight_after'] = queryset.aggregate(after=Sum('total_account')).get('after')
         context['type'] = 'list'
@@ -379,8 +390,10 @@ class FactoryInSide_div(LoginRequiredMixin, DetailView):
     
     def get_context_data(self, **kwargs):
         queryset = FactoryInSide.objects.filter(factory=self.object)
+        outSide = FactoryOutSide.objects.filter(factory=self.object)
         context = super().get_context_data(**kwargs)
         context['inSide'] = queryset.order_by('id')
+        context['sum_outside'] = outSide.aggregate(out=Sum('weight_after_loss')).get('out')
         context['sum_weight'] = queryset.aggregate(weight=Sum('weight')).get('weight')
         context['sum_weight_after'] = queryset.aggregate(after=Sum('total_account')).get('after')
         return context    
@@ -390,7 +403,7 @@ class FactoryInSide_div(LoginRequiredMixin, DetailView):
 def FactoryInSideCreate(request):
     if request.is_ajax():
         factory_id = request.POST.get('id')
-        factory = Factory.objects.get(id=factory_id)
+        factory = Factory.objects.get(id=factory_id) 
         print(factory)
         date = request.POST.get('date')
         weight = request.POST.get('weight')
@@ -404,28 +417,34 @@ def FactoryInSideCreate(request):
         total_account = request.POST.get('total_account')
         admin = request.POST.get('admin')
         
+        if factory_id and date and weight and color and product and product_weight and product_count and product_time and hour_count and hour_price and total_account and admin:
+    
+            obj = FactoryInSide()
+            obj.factory = factory
+            obj.date = date
+            obj.weight = weight
+            obj.color = color
+            obj.product = product
+            obj.product_weight = product_weight
+            obj.product_time = product_time
+            obj.product_count = product_count
+            obj.hour_count = hour_count
+            obj.hour_price = hour_price
+            obj.total_account = total_account
+            obj.admin = admin
+            obj.save()
         
-        obj = FactoryInSide()
-        obj.factory = factory
-        obj.date = date
-        obj.weight = weight
-        obj.color = color
-        obj.product = product
-        obj.product_weight = product_weight
-        obj.product_time = product_time
-        obj.product_count = product_count
-        obj.hour_count = hour_count
-        obj.hour_price = hour_price
-        obj.total_account = total_account
-        obj.admin = admin
-        obj.save()
-        
-        if obj:
+            if obj:
+                response = {
+                'msg' : 1
+                }
+        else:
             response = {
-                'msg' : 'Send Successfully'
+                'msg' : 0
             }
-            
-        return JsonResponse(response) 
+        return JsonResponse(response)
+        
+           
     
 
 def FactoryInsideDelete(request):
