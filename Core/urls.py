@@ -10,6 +10,7 @@ urlpatterns = [
     path('SparePartsSearch/', views.SparePartsSearch.as_view(), name='SparePartsSearch'),
     path('SparePartsOrderSearch/', views.SparePartsOrderSearch.as_view(), name='SparePartsOrderSearch'),
     path('MachineOrderSearch/', views.MachineOrderSearch.as_view(), name='MachineOrderSearch'),
+    path('factory_search/', views.FactorySearch.as_view(), name='FactorySearch'),
     
     
     path('read/', views.Read, name='Read'),

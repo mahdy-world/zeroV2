@@ -14,7 +14,7 @@ class Factory(models.Model):
     machine_count = models.IntegerField(null=True , verbose_name="عدد المكن")
     phone = models.CharField(null=True, blank=True, max_length=12 , verbose_name="رقم الموبيل")
     active = models.BooleanField(default=True , verbose_name="يعمل")
-    date = models.DateField(null=True, verbose_name="تاريخ البداية", default=date.today)
+    start_date = models.DateField(null=True, verbose_name="تاريخ البداية", default=date.today)
     deleted = models.BooleanField(default=False)
     
     def __str__(self):

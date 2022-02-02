@@ -267,7 +267,7 @@
                {% if request.user.has_access_to_factory %}
                    <!-- المصانع  -->
                 <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                    <a href="javascript: void(0);"  data-toggle="modal" data-target="#factory_modal" class="has-arrow waves-effect">
                         <i class='bx bxs-factory bx-sm'></i>
                         <span key="t-ecommerce"> المصانع</span>
                     </a>
@@ -305,7 +305,7 @@
                 {% if request.user.has_access_to_treasury == True %}
                 <!-- الخزائن والحسابات البنكية  -->
                 <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                    <a href="javascript: void(0);" data-toggle="modal" data-target="#bank_invoice_modal" class="has-arrow waves-effect">
                         <i class='bx bx-dollar-circle bx-sm' ></i>
                         <span key="t-ecommerce"> الخزائن والحسابات البنكية</span>
                     </a>
@@ -379,7 +379,7 @@
                     <li class="menu-title" key="t-menu">أدوات النظام</li>
                     <!-- الاعددات   -->
                     <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <a href="javascript: void(0);" data-toggle="modal" data-target="#user_invoice_modal" class="has-arrow waves-effect">
                             <i class="bx bx-cog bx-sm" ></i>
                             <span key="t-ecommerce"> اعدادات المستخدمين  </span>
                         </a>

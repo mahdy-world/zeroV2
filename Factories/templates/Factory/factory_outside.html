@@ -200,7 +200,8 @@
                                        $('#percent_loss').on('change', function (){
                                             const weight = $('#weight').val();
                                             const percent_loss = $('#percent_loss').val();
-                                            let prcent_loss_valu = (weight - percent_loss); 
+
+                                            let prcent_loss_valu = (weight - (weight * percent_loss)/100); 
                                             let weight_after_loss = $('#weight_after_loss').val(prcent_loss_valu);
                                        }); 
 

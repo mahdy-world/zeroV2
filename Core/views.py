@@ -9,6 +9,7 @@ from Core.forms import SystemInfoForm
 from Machines.models import *
 from Core.models import SystemInformation
 from SpareParts.models import SparePartsOrders
+from Factories.models import Factory
 
 # Create your views here.
 
@@ -81,6 +82,22 @@ class MachineSearch(LoginRequiredMixin, ListView):
     def get_queryset(self):
         machine_search = self.request.GET.get("machine")  
         queryset = self.model.objects.filter(name__icontains=machine_search, deleted=False)
+        return queryset
+    
+class FactorySearch(LoginRequiredMixin, ListView):
+    login_url = '/auth/login/'
+    model = Factory
+    template_name = 'Factory/factory_list.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['message'] = 'active'
+        context['count'] = self.model.objects.filter(deleted=False).count()
+        return context
+    
+    def get_queryset(self):
+        search = self.request.GET.get("factory")  
+        queryset = self.model.objects.filter(name__icontains=search, deleted=False)
         return queryset
 
 

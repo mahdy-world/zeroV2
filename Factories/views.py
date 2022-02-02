@@ -183,14 +183,16 @@ class FactoryPayment(LoginRequiredMixin, DetailView):
         queryset = Payment.objects.filter(factory=self.object)
         payment_sum = queryset.aggregate(price=Sum('price')).get('price')
         total_account =FactoryInSide.objects.filter(factory=self.object).aggregate(total=Sum('total_account')).get('total')
-        
+        total = ''
+        if total_account and payment_sum != None:
+            total = total_account - payment_sum
         
         
         context = super().get_context_data(**kwargs)
         context['payment'] = queryset.order_by('id')
         context['payment_sum'] = payment_sum
         context['total_account'] = total_account
-        # context['total'] = total
+        context['total'] = total
         context['title'] = 'مسحوبات مصنع: ' + str(self.object)
         context['form'] = FactoryPaymentForm(self.request.POST or None)
         context['type'] = 'list'
