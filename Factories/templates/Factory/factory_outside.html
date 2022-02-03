@@ -209,7 +209,6 @@
                                                 data : {
                                                     id : '{{object.id}}' , 
                                                     date : $('#date').val(),
-                                                    number :$('#number').val(),
                                                     weight : $('#weight').val(),
                                                     color : $('#color').val(),
                                                     percent_loss : $('#percent_loss').val(),
@@ -221,7 +220,6 @@
                                                 success: function(response){
                                                     /* response message */
                                                     if (response.msg == 1){
-                                                        $('#number').val('');
                                                         $('#weight').val('');
                                                         $('#color').val('');
                                                         $('#weight_after_loss').val('');
