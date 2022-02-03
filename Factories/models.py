@@ -38,7 +38,6 @@ class FactoryOutSide(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ العملية")
     date = models.DateField(null=True, verbose_name="التاريخ", default=date.today)
     factory = models.ForeignKey(Factory, on_delete=models.CASCADE, verbose_name="المصنع")
-    number = models.IntegerField(null=True, blank=True, verbose_name="الرقم")
     weight = models.FloatField(null=True, blank=True, verbose_name="الوزن جرام")
     color = models.CharField(null=True, max_length=50, blank=True, verbose_name="اللون")
     percent_loss = models.FloatField(null=True, blank=True, verbose_name="نسبة الهالك")

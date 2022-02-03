@@ -40,11 +40,10 @@ class FactoryPaymentForm(forms.ModelForm):
         
 class FactoryOutSideForm(forms.ModelForm):
     class Meta:
-        fields = ['date', 'number', 'weight', 'color', 'percent_loss', 'weight_after_loss', 'admin' ]
+        fields = ['date', 'weight', 'color', 'percent_loss', 'weight_after_loss', 'admin' ]
         model = FactoryOutSide
         widgets = {
             'date' : forms.TextInput(attrs={'type':'date', 'class':'form-control',  'placeholder':'تاريخ الخروج...', 'id':'date'}),
-            'number' : forms.NumberInput(attrs={ 'class':'form-control', 'min':'1', 'placeholder':'الرقم...', 'id':'number'}),
             'admin' : forms.TextInput(attrs={'class':'form-control', 'min':'1', 'placeholder':'المسئول...', 'id':'admin'}),
             'weight' : forms.NumberInput(attrs={'class':'form-control', 'min':'1', 'placeholder':'الوزن...', 'id':'weight'}),
             'color' : forms.TextInput(attrs={'class':'form-control', 'min':'1', 'placeholder':'اللون...', 'id':'color'}),
