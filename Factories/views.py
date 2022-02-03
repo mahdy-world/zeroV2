@@ -333,19 +333,17 @@ def FactoryOutSideCreate(request):
         factory = Factory.objects.get(id=factory_id)
         print(factory)
         date = request.POST.get('date')
-        number = request.POST.get('number')
         weight = request.POST.get('weight')
         color = request.POST.get('color')
         percent_loss = request.POST.get('percent_loss')
         weight_after_loss = request.POST.get('weight_after_loss')
         admin = request.POST.get('admin')
         
-        if factory_id and date and admin and number and weight and color and percent_loss and weight_after_loss:
+        if factory_id and date and admin  and weight and color and percent_loss and weight_after_loss:
             obj = FactoryOutSide()
             obj.factory = factory
             obj.date = date
             obj.admin = admin
-            obj.number = number
             obj.weight = weight
             obj.color = color
             obj.percent_loss = percent_loss
