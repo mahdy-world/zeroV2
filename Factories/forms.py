@@ -33,7 +33,7 @@ class FactoryPaymentForm(forms.ModelForm):
         widgets = {
             'date' : forms.TextInput(attrs={'type':'date', 'class':'form-control',  'placeholder':'تاريخ السحب...', 'id':'date'}),
             'price' : forms.NumberInput(attrs={ 'class':'form-control', 'min':'1', 'placeholder':'المبلغ...', 'id':'price'}),
-            'admin' : forms.TextInput(attrs={'class':'form-control', 'min':'1', 'placeholder':'المسئول...', 'id':'admin'}),
+            'admin' : forms.Select(attrs={'class':'form-control',  'placeholder':'المسئول...', 'id':'admin'}),
             'recipient' : forms.TextInput(attrs={'class':'form-control', 'min':'1', 'placeholder':'المستلم...', 'id':'recipient'}),
         }
         

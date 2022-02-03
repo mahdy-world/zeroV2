@@ -84,18 +84,15 @@ def ChangePassword(request):
 
 def create_user(request,):
     action_url = reverse_lazy('Auth:create_user')
-    success_url = reverse_lazy('Core:index')
     form = RegisterForm(request.POST or None)
+    
     if form.is_valid():
         user = form.save(commit=False)
         user.set_password(form.cleaned_data['password'])
         form.save()
         messages.success(request, " تم اضافة مستخدم بنجاح", extra_tags="success")
-        if request.POST.get('url'):
-            return request.POST.get('url')
-        else:
-            return success_url
-        # return redirect('Core:index')
+        return redirect('Core:index')
+    
     context = {
         'title': 'إضافة مستخدم جديد',
         'form': form,
@@ -139,7 +136,6 @@ class UsersUpdate(LoginRequiredMixin, UpdateView):
         
     def form_valid(self, form):
         user_pass = form.cleaned_data.get("password").replace(" ", "")
-        messages.success(self.request, "تم التعديل بنجاح", extra_tags="success")
         myform = User.objects.get(id=self.kwargs['pk'])
         myform.username = form.cleaned_data.get("username")
         myform.first_name = form.cleaned_data.get("first_name")

@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.db import models
+from Auth.models import User
 
 from Products.models import Product
 
@@ -25,7 +26,7 @@ class Payment(models.Model):
     price = models.IntegerField(verbose_name="المبلغ")
     factory = models.ForeignKey(Factory , on_delete=models.CASCADE , verbose_name="المصنع")
     recipient = models.CharField(max_length=50 , verbose_name="المستلم")
-    admin = models.CharField(max_length=50 , verbose_name="المسئول")
+    admin = models.ForeignKey(User,max_length=50, on_delete=models.CASCADE, null=True, verbose_name="المسئول")
     date = models.DateField(null=True, verbose_name="التاريخ", default=date.today)
     
     def __str__(self):
