@@ -101,6 +101,8 @@ def create_user(request,):
     return render(request, 'forms/user_form.html', context)
 
 
+
+
 class Users(LoginRequiredMixin, ListView):
     login_url = '/auth/login/'
     model = User 
@@ -111,6 +113,7 @@ class Users(LoginRequiredMixin, ListView):
         context['title'] =  'قائمة المستخدمين'
         return context
     
+
     
 class UsersUpdate(LoginRequiredMixin, UpdateView):
     login_url = '/auth/login/'

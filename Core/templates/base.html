@@ -46,7 +46,7 @@
     <body data-sidebar="dark" class="sidebar-enable vertical-collpsed">
 
         <!-- Spinner -->
-        <div id="preloader" >
+        <!-- <div id="preloader" >
             <div id="status" >
                 <div class="spinner-chase">
                     <div class="chase-dot"></div>
@@ -57,7 +57,7 @@
                     <div class="chase-dot"></div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Begin page -->
         <div id="layout-wrapper">
@@ -71,20 +71,7 @@
             
             {% endblock main %}
 
-            <!-- action modal -->
-            <div class="modal fade" data-backdrop="static" id="action_modal">
-                <div class="modal-dialog modal-lg" id="action_modal2">
-                    <div class="modal-content" id="action_body">
-                            <span class="float-left">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </span>
-
-
-                    </div>
-                </div>
-            </div>
-            <!-- end action modal -->
-
+          
             <!-- spareparts -->
             <div class="modal fade"  data-backdrop="static" id="spareparts_invoice_modal">
             <div class="modal-dialog modal-xl" style="background: #3f3f3f;">
@@ -877,6 +864,20 @@
                 </div>
             </div>
             <!-- end search -->
+
+              <!-- action modal -->
+              <div class="modal fade" data-backdrop="static" id="action_modal">
+                <div class="modal-dialog modal-lg" id="action_modal2">
+                    <div class="modal-content" id="action_body">
+                            <span class="float-left">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </span>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- end action modal -->
 
             <!-- footer -->
             <footer class="footer">

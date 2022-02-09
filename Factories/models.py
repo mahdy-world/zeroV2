@@ -45,7 +45,7 @@ class FactoryOutSide(models.Model):
     admin = models.CharField(null=True, max_length=50, blank=True, verbose_name='المسئول')
     
     def __str__(self):
-        return self.date  
+        return self.factory.name
     
      
 class FactoryInSide(models.Model):

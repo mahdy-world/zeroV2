@@ -125,7 +125,7 @@
                                                         <td><i class="fas fa-user"></i> {{x.recipient}} </td>
                                                         
                                                         <td>
-                                                            <a href="{% url 'Factories:FactoryPaymentUpdate' x.id %}" class="mr-3 text-warning" data-toggle="modal" data-target="#sub_modal" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                                            <a href="{% url 'Factories:FactoryPaymentUpdate' x.id %}" class="mr-3 text-warning" data-toggle="modal" data-target="#action_modal" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
                                                             <a onclick="PaymentDelete('{{x.id}}')" style="cursor: pointer;" class="text-danger" ><i class="mdi mdi-close font-size-18"></i></a>
                                                         </td>
                                                         

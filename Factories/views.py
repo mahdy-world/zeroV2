@@ -238,7 +238,7 @@ class FactoryPaymentUpdate(LoginRequiredMixin, UpdateView):
         return context 
     
     def get_success_url(self):
-        messages.success(self.request, " تم تعديل المحسوبات " + str(self.object) + " بنجاح ", extra_tags="success")
+        messages.success(self.request, " تم تعديل المسحوبات " + str(self.object) + " بنجاح ", extra_tags="success")
         if self.request.POST.get('url'):
             return self.request.POST.get('url')
         else:
@@ -361,6 +361,25 @@ def FactoryOutSideCreate(request):
         return JsonResponse(response)
         
           
+class FactoryOutSideUpdate(LoginRequiredMixin, UpdateView):
+    login_url = '/auth/login/'
+    model = FactoryOutSide
+    form_class =  FactoryOutSideForm
+    template_name = 'forms/form_template.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'تعديل الخارج يوم : ' + str(self.object)
+        context['message'] = 'update'
+        context['action_url'] = reverse_lazy('Factories:FactoryOutSideUpdate', kwargs={'pk': self.object.id})
+        return context 
+    
+    def get_success_url(self):
+        messages.success(self.request, " تم تعديل الخارج " + str(self.object) + " بنجاح ", extra_tags="success")
+        if self.request.POST.get('url'):
+            return self.request.POST.get('url')
+        else:
+            return self.success_url
     
 
            
@@ -397,6 +416,29 @@ class FactoryInside(LoginRequiredMixin, DetailView):
         context['type'] = 'list'
         return context
 
+
+class FactoryInSideUpdate(LoginRequiredMixin, UpdateView):
+    login_url = '/auth/login/'
+    model = FactoryInSide
+    form_class =  FactoryInSideForm
+    template_name = 'forms/form_template.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'تعديل الداخل  : ' + str(self.object)
+        context['message'] = 'update'
+        context['action_url'] = reverse_lazy('Factories:FactoryInSideUpdate', kwargs={'pk': self.object.id})
+        return context 
+    
+    def get_success_url(self):
+        messages.success(self.request, " تم تعديل الداخل " + str(self.object) + " بنجاح ", extra_tags="success")
+        if self.request.POST.get('url'):
+            return self.request.POST.get('url')
+        else:
+            return self.success_url
+    
+
+           
 
 class FactoryInSide_div(LoginRequiredMixin, DetailView):
     login_url = '/auth/login/'
