@@ -1,6 +1,7 @@
 from pyexpat import model
 from django import forms
 from .models import *
+from django.utils.timezone import now
 
 class FactoryForm(forms.ModelForm):
     class Meta:
@@ -36,6 +37,23 @@ class FactoryPaymentForm(forms.ModelForm):
             'admin' : forms.Select(attrs={'class':'form-control',  'placeholder':'المسئول...', 'id':'admin'}),
             'recipient' : forms.TextInput(attrs={'class':'form-control',  'placeholder':'المستلم...', 'id':'recipient'}),
         }
+        
+class FactoryPaymentReportForm(forms.Form):
+    from_date = forms.DateField(widget=forms.DateInput(attrs={
+        'type':'date',
+        'name':'form_date',
+        'class':'form-control',
+        'placeholder':'من ...'}),
+        label= 'من',
+        initial=now().date().isoformat())
+         
+    to_date = forms.DateField(widget=forms.DateInput(attrs={
+        'type':'date',
+        'name':'to_date',
+        'class':'form-control',
+        'placeholder':'الي ...'}),
+        label= 'الي',
+        initial=now().date().isoformat())     
         
         
 class FactoryOutSideForm(forms.ModelForm):

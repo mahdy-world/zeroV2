@@ -245,7 +245,32 @@ class FactoryPaymentUpdate(LoginRequiredMixin, UpdateView):
             return self.success_url
 
 
+class FactoryPaymentReport(LoginRequiredMixin, ListView):
+    login_url = '/auth/login/'
+    model = Payment
+    form = FactoryPaymentReportForm()
+    template_name = 'Factory_Reports/factory_payment_report.html'
+    
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.form
+        context['name'] = Factory.objects.get(id=self.kwargs['pk'])
+        return context
 
+
+    def queryset(self):
+        if not self.request.GET.get('submit'):
+            queryset = Payment.objects.filter(id=0)
+        else:
+            queryset = Payment.objects.filter(factory = self.kwargs['pk'])
+            if self.request.GET.get('from_date'):
+                queryset = queryset.filter(date__gte = self.request.GET.get('from_date'), factory=self.kwargs['pk'])
+            if self.request.GET.get('to_date'):
+                queryset = queryset.filter(date__lte = self.request.GET.get('to_date'), factory=self.kwargs['pk'])                  
+        return queryset         
+            
+            
+            
 
 def FactoryPaymentCreate(request):
     if request.is_ajax():
@@ -276,10 +301,7 @@ def FactoryPaymentCreate(request):
                 'msg' : 0
             }
         return JsonResponse(response)
-    
-    
 
-    
     
 def FactoryPaymentDelete(request):
     if request.is_ajax():
@@ -293,7 +315,6 @@ def FactoryPaymentDelete(request):
             }
 
         return JsonResponse(response)
-
 
 
 class FactoryOutside(LoginRequiredMixin, DetailView):
@@ -380,9 +401,7 @@ class FactoryOutSideUpdate(LoginRequiredMixin, UpdateView):
             return self.request.POST.get('url')
         else:
             return self.success_url
-    
-
-           
+          
     
 def FactoryOutsideDelete(request):
     if request.is_ajax():
@@ -438,8 +457,6 @@ class FactoryInSideUpdate(LoginRequiredMixin, UpdateView):
             return self.success_url
     
 
-           
-
 class FactoryInSide_div(LoginRequiredMixin, DetailView):
     login_url = '/auth/login/'
     model = Factory
@@ -454,7 +471,6 @@ class FactoryInSide_div(LoginRequiredMixin, DetailView):
         context['sum_weight'] = queryset.aggregate(weight=Sum('weight')).get('weight')
         context['sum_weight_after'] = queryset.aggregate(after=Sum('total_account')).get('after')
         return context    
-
 
       
 def FactoryInSideCreate(request):
@@ -501,9 +517,7 @@ def FactoryInSideCreate(request):
             }
         return JsonResponse(response)
         
-           
     
-
 def FactoryInsideDelete(request):
     if request.is_ajax():
         inside_id = request.POST.get('inside_id')

@@ -17,6 +17,7 @@ urlpatterns = [
     path('payment/create/', FactoryPaymentCreate, name="FactoryPaymentCreate"),
     path('payment/delete/', FactoryPaymentDelete, name="FactoryPaymentDelete"),
     path('payment/update/<int:pk>/', FactoryPaymentUpdate.as_view(), name="FactoryPaymentUpdate"),
+    path('payment/report/<int:pk>/', FactoryPaymentReport.as_view(), name="FactoryPaymentReport"),
     
     
     path('outside/<int:pk>', FactoryOutside.as_view(), name="FactoryOutside"),
@@ -31,4 +32,7 @@ urlpatterns = [
     path('inside/<int:pk>/update/', FactoryInSideUpdate.as_view(), name="FactoryInSideUpdate"), 
     path('inside/create/', FactoryInSideCreate, name="FactoryInSideCreate"),# url for create function using ajax
     path('inside/delete/', FactoryInsideDelete, name="FactoryInsideDelete"), # url for delete function using ajax
+    
+    
+    
 ]
