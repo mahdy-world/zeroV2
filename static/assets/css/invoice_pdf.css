@@ -1,37 +1,106 @@
-body {
-    font-family: "Times New Roman", Times, serif;
+@font-face {
+  font-family: "Cairo";
+  src: url("../vendor/font/Cairo-Regular.ttf");
+
+}
+  @page {
+    font-family: 'Cairo',serif;
+    font-size: 16px;
+    margin: 3cm;
+    @bottom-left {
+      color: #050505;
+      content: '♥ شكراً لتعاملكم معنا!';
+    }
+    @bottom-right {
+      color: #a9a;
+      content: 'تم طباعة الفاتورة بواسطة Zerone';
+      font-size: 9pt;
+    }
+  }
+  
+  html {
+    color: #14213d;
+    font-family: 'Cairo',serif;
+    font-size: 11pt;
+    line-height: 1.6;
+  }
+  body {
+    margin: 0;
+  }
+  
+  h1 {
+    font-size: 40pt;
+    margin: 0;
+  }
+  
+  aside {
+    display: flex;
+    margin: 0em 0 4em;
+  }
+  aside address {
+    font-style: normal;
+    
+  }
+  aside address#from {
+    color: #a9a;
+    flex: 1;
+  }
+  aside address.to {
+    text-align: right;
+  }
+  
+  dl {
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+    margin-bottom: 10px;
+  }
+  dl span{
+    color: rgb(99, 99, 99);
+  }
+  dl p {
+    color: #a9a;
+  }
+ 
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th {
+    border-bottom: .2mm solid #a9a;
+    color: #a9a;
+    font-size: 10pt;
+    font-weight: 400;
+    padding-bottom: .25cm;
+    text-transform: uppercase;
+  }
+  td {
+    padding-top: 7mm;
+  }
+  td:first-of-type {
+    color: #1ee494;
     font-weight: bold;
-}
-
-table {
-    font-family: arial, sans-serif;
-	width: 100%;
-}
-
-.prods {
-	width: 127%;
-	margin-left: -85px;
-	font-size: 25px;
-}
-
-td, th {
-    border: 1px solid #6495ED;
+    text-align: right;
+  }
+  th, td {
     text-align: center;
-    padding: 5px;
-}
-
-.prods tr:nth-child(odd) {
-    background-color: white;
-    border: 1px solid #6495ED;
-}
-
-.prods tr:nth-child(even) {
-    background-color: white;
-    border: 1px solid #6495ED;
-}
-
-#shop_name {
-    transform: scale(1.2, 1.2);
-}
-
-
+  }
+  th:first-of-type, td:first-of-type {
+    text-align: left;
+  }
+  th:last-of-type, td:last-of-type {
+    text-align: right;
+  }
+  table#total {
+    background: #f6f6f6;
+    border-color: #f6f6f6;
+    border-style: solid;
+    border-width: 2cm 3cm;
+    bottom: 0;
+    font-size: 20pt;
+    margin: 0 -3cm;
+    position: absolute;
+    width: 18cm;
+  }

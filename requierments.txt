@@ -10,3 +10,5 @@ pytz==2021.1
 soupsieve==2.2.1
 sqlparse==0.4.1
 psycopg2==2.8.6
+weasyprint==50
+django-weasyprint==0.5.4

@@ -18,6 +18,7 @@ urlpatterns = [
     path('payment/delete/', FactoryPaymentDelete, name="FactoryPaymentDelete"),
     path('payment/update/<int:pk>/', FactoryPaymentUpdate.as_view(), name="FactoryPaymentUpdate"),
     path('payment/report/<int:pk>/', FactoryPaymentReport.as_view(), name="FactoryPaymentReport"),
+    path('payment/print/<int:pk>/', PrintPayment , name="PrintPayment"),
     
     
     path('outside/<int:pk>', FactoryOutside.as_view(), name="FactoryOutside"),

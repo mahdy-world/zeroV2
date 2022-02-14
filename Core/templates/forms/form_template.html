@@ -14,7 +14,7 @@
 </style>
 {% block main %}
     {% load bootstrap4 %}
-    <form method="post" action="{{ action_url }}">
+    <form method="post" action="{{ action_url }}" enctype="multipart/form-data">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
@@ -84,6 +84,8 @@
                             {% bootstrap_form form %}
                             <h5 class="font-weight-bold text-center"> تأكيد العملية !</h5>   
                         {% elif message == 'info' %}   
+                        <img src="{{info_obj.logo.url}}" width="200px" height="200px"> 
+                        
                         {% csrf_token %}
                         {% bootstrap_form form %}
 

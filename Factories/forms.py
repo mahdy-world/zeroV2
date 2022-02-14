@@ -42,18 +42,20 @@ class FactoryPaymentReportForm(forms.Form):
     from_date = forms.DateField(widget=forms.DateInput(attrs={
         'type':'date',
         'name':'form_date',
+        'id':'from_date',
         'class':'form-control',
-        'placeholder':'من ...'}),
+        'placeholder':'من ...'}),                       
         label= 'من',
-        initial=now().date().isoformat())
+        )
          
     to_date = forms.DateField(widget=forms.DateInput(attrs={
         'type':'date',
         'name':'to_date',
+        'id':'to_date',
         'class':'form-control',
         'placeholder':'الي ...'}),
         label= 'الي',
-        initial=now().date().isoformat())     
+        )     
         
         
 class FactoryOutSideForm(forms.ModelForm):

@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Invoice</title>
+    <meta name="description" content="Invoice demo sample">
+  </head>
+
+  <body>
+    <h1>
+        <img src={{system_info.logo.url}} width="150px" height="150px">
+    </h1>
+
+    <aside>
+      <address class="to">
+       
+      </address>
+    </aside>
+
+    <dl id="informations">
+        <h5>{{system_info.name}}</h5>
+        <h5><span>{{date|date:'Y-d-m'}}</span>تاريخ الفاتورة :</h5> 
+      <h5><span>{{system_info.phone}}</span> الموبيل: </h5> 
+      <h5><span>{{system_info.address}}</span>العنوان: </h5> 
+      <h5><span>{{factory.name}}</span>مسحوبات مصنع: </h5> 
+    </dl>
+
+    <table>
+      <thead>
+        <tr>
+          <th>المستلم</th>
+          <th>المسئول</th>
+          <th>المبلغ</th>
+          <th>التاريخ</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for x in queryset %}
+          <tr>
+            <td>{{x.recipient}}</td>
+            <td>{{x.admin}}</td>
+            <td>{{x.price}}$</td>
+            <td>{{x.date|date:'Y-m-d'}}</td>
+          </tr>
+        {% endfor %}
+        
+        
+      </tbody>
+    </table>
+
+    <table id="total">
+      <thead>
+        <tr>
+          <th>اجمالي المبلغ</th>
+          <th>الي تاريخ</th>
+          <th>من تاريخ</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td>{{count_price}} جنية</td>
+            <td>{{to_date}}</td>
+          <td>{{from_date}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

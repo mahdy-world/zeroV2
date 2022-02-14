@@ -1,5 +1,5 @@
 
-from sys import int_info
+import datetime
 from django.db.models.aggregates import Sum
 from django.http import HttpResponse, JsonResponse, response
 from django.shortcuts import get_object_or_404, redirect , render
@@ -8,12 +8,18 @@ from django.contrib.auth.mixins import  LoginRequiredMixin
 from django.views.generic import *
 from django.contrib import messages
 from django.views.generic import *
+
+from Core.models import SystemInformation
 from .models import *
 from .forms import *
+
 from django.contrib import messages
+import weasyprint
+from django.template.loader import render_to_string
+from datetime import datetime, timedelta
 
 
-# Create your views here.
+
 class FactoryList(LoginRequiredMixin, ListView):
     login_url = '/auth/login/'
     model = Factory
@@ -260,14 +266,49 @@ class FactoryPaymentReport(LoginRequiredMixin, ListView):
 
     def queryset(self):
         if not self.request.GET.get('submit'):
-            queryset = Payment.objects.filter(id=0)
+            queryset = None
         else:
             queryset = Payment.objects.filter(factory = self.kwargs['pk'])
             if self.request.GET.get('from_date'):
-                queryset = queryset.filter(date__gte = self.request.GET.get('from_date'), factory=self.kwargs['pk'])
+                queryset = queryset.filter(date__gte = self.request.GET.get('from_date'))
             if self.request.GET.get('to_date'):
-                queryset = queryset.filter(date__lte = self.request.GET.get('to_date'), factory=self.kwargs['pk'])                  
-        return queryset         
+                queryset = queryset.filter(date__lte = self.request.GET.get('to_date'))
+                                  
+        return queryset 
+    
+
+
+def PrintPayment(request,pk):
+    factory = Factory.objects.get(id=pk)
+    system_info = SystemInformation.objects.all()
+    if system_info.count() > 0:
+        system_info = system_info.last()
+    else:
+        system_info = None
+            
+    queryset = Payment.objects.filter(factory=pk)
+    if request.GET.get('from_date'):
+        queryset = queryset.filter(date__gte = request.GET.get('from_date'))
+    if request.GET.get('to_date'):
+        queryset = queryset.filter(date__lte = request.GET.get('to_date'))
+    
+   
+    context = {
+        'queryset':queryset,
+        'count_price':  queryset.aggregate(price=Sum('price')).get('price'),
+        'system_info':system_info,
+        'date': datetime.now(),
+        'user': request.user.username,
+        'from_date': request.GET.get('from_date'),
+        'to_date': request.GET.get('to_date'),
+        'factory':factory,
+    }
+    html_string = render_to_string('Factory_Reports/print_payment.html', context)
+    html = weasyprint.HTML(string=html_string, base_url=request.build_absolute_uri())
+    pdf = html.write_pdf(stylesheets=[weasyprint.CSS('static/assets/css/invoice_pdf.css')], presentational_hints=True)
+    response = HttpResponse(pdf, content_type='application/pdf')
+    return response
+
             
             
             
@@ -530,3 +571,5 @@ def FactoryInsideDelete(request):
             }
 
         return JsonResponse(response)    
+        
+

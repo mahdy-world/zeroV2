@@ -55,6 +55,7 @@ class SystemInfoUpdate(LoginRequiredMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'تعديل بيانات النظام'
         context['message'] = 'info'
+        context['info_obj'] = self.object
         context['action_url'] = reverse_lazy('Core:SystemInfoUpdate',kwargs={'pk': self.object.id})
         return context
     
