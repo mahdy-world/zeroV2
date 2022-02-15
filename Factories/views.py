@@ -1,4 +1,5 @@
 
+from asyncio.windows_events import NULL
 import datetime
 from django.db.models.aggregates import Sum
 from django.http import HttpResponse, JsonResponse, response
@@ -272,8 +273,10 @@ class FactoryPaymentReport(LoginRequiredMixin, ListView):
     
     def get_sum_price(self):
         queryset = self.queryset()
-        sum_price =  queryset.aggregate(price=Sum('price')).get('price')
-        
+        if queryset != None:
+            sum_price =  queryset.aggregate(price=Sum('price')).get('price')
+        else:
+            sum_price = 0
         total = {
             'sum_price' :sum_price
         }
