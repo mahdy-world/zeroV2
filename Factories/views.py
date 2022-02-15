@@ -257,13 +257,7 @@ class FactoryPaymentReport(LoginRequiredMixin, ListView):
     form = FactoryPaymentReportForm()
     template_name = 'Factory_Reports/factory_payment_report.html'
     
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = self.form
-        context['name'] = Factory.objects.get(id=self.kwargs['pk'])
-        return context
-
-
+   
     def queryset(self):
         if not self.request.GET.get('submit'):
             queryset = None
@@ -276,7 +270,21 @@ class FactoryPaymentReport(LoginRequiredMixin, ListView):
                                   
         return queryset 
     
-
+    def get_sum_price(self):
+        queryset = self.queryset()
+        sum_price =  queryset.aggregate(price=Sum('price')).get('price')
+        
+        total = {
+            'sum_price' :sum_price
+        }
+        return total
+    
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.form
+        context['summary'] = self.get_sum_price()
+        context['name'] = Factory.objects.get(id=self.kwargs['pk'])
+        return context
 
 def PrintPayment(request,pk):
     factory = Factory.objects.get(id=pk)
