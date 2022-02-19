@@ -267,8 +267,11 @@
                             <span key="t-profile">بيانات النظام</span>
                         </a>
                         {% endif %}
-                        
-                    <a class="dropdown-item" href="{% url 'Treasury:WorkTreasuryList' %}"><i class="bx bx-wallet font-size-16 align-middle mr-1"></i> <span key="t-my-wallet">الخزينة</span></a>
+                     
+
+                    {% if  request.user.has_access_to_treasury == True  %}
+                     <a class="dropdown-item" href="{% url 'Treasury:WorkTreasuryList' %}"><i class="bx bx-wallet font-size-16 align-middle mr-1"></i> <span key="t-my-wallet">الخزينة</span></a>
+                    {% endif %}    
                     
                     {% if request.user.is_staff %}
                         <a class="dropdown-item d-block" href="{% url 'Auth:ChangePassword' %}" data-target="#action_modal" data-toggle="modal">

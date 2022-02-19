@@ -21,7 +21,7 @@ class RegisterForm(forms.ModelForm):
     class Meta:
         model = User
         fields = [
-            'username','password','first_name','last_name','is_staff','is_active','is_superuser'
+            'username','password','first_name','last_name','is_active','is_superuser'
         ]
         
         widgets = {
@@ -42,48 +42,46 @@ class RegisterForm(forms.ModelForm):
         self.fields['first_name'].label = "الاسم الاول"   
         self.fields['last_name'].label = " الاسم الاخير"  
          
-        self.fields['is_staff'].label = "موظف"   
-        self.fields['is_staff'].help_text = "لدية صلاحيات محدودة"  
          
         self.fields['is_active'].label = "نشط"   
         self.fields['is_active'].help_text = "يعمل / لا يعمل .... بديل للحذف" 
           
         self.fields['is_superuser'].label = "مسئول"   
-        self.fields['is_superuser'].help_text = "لدية كل الصلاحيات لعمل كل شئ "   
-class RegisterForm(forms.ModelForm):
+        self.fields['is_superuser'].help_text = "لدية كل الصلاحيات (الحذف / التعديل)"   
+# class RegisterForm(forms.ModelForm):
     
-    class Meta:
-        model = User
-        fields = [
-            'username','password','first_name','last_name','is_staff','is_active','is_superuser'
-        ]
+#     class Meta:
+#         model = User
+#         fields = [
+#             'username','password','first_name','last_name','is_staff','is_active','is_superuser'
+#         ]
         
-        widgets = {
-            'password': forms.PasswordInput(attrs={'class':'form-control', 'name':'password' , 'placeholder':'ضع كلمة سر جديدة ....'}),
-            'username': forms.TextInput(attrs={'class':'form-control','name':'username'}),
-            'first_name': forms.TextInput(attrs={'class':'form-control','name':'first_name'}),
-            'last_name': forms.TextInput(attrs={'class':'form-control','name':'last_name'}),
-            'is_staff': forms.CheckboxInput(attrs={'class':'form-control','name':'is_staff'}),
-            'is_active': forms.CheckboxInput(attrs={'class':'form-control','name':'is_active'}),
-            'is_superuser': forms.CheckboxInput(attrs={'class':'form-control','name':'is_superuser'}),
-        }
+#         widgets = {
+#             'password': forms.PasswordInput(attrs={'class':'form-control', 'name':'password' , 'placeholder':'ضع كلمة سر جديدة ....'}),
+#             'username': forms.TextInput(attrs={'class':'form-control','name':'username'}),
+#             'first_name': forms.TextInput(attrs={'class':'form-control','name':'first_name'}),
+#             'last_name': forms.TextInput(attrs={'class':'form-control','name':'last_name'}),
+#             'is_staff': forms.CheckboxInput(attrs={'class':'form-control','name':'is_staff'}),
+#             'is_active': forms.CheckboxInput(attrs={'class':'form-control','name':'is_active'}),
+#             'is_superuser': forms.CheckboxInput(attrs={'class':'form-control','name':'is_superuser'}),
+#         }
     
-    def __init__(self, *args, **kwargs):
-        super(RegisterForm, self).__init__(*args, **kwargs)
-        self.fields['username'].label = "اسم المستخدم" 
-        self.fields['username'].help_text = "" 
+#     def __init__(self, *args, **kwargs):
+#         super(RegisterForm, self).__init__(*args, **kwargs)
+#         self.fields['username'].label = "اسم المستخدم" 
+#         self.fields['username'].help_text = "" 
         
-        self.fields['password'].label = "كلمة المرور"   
-        self.fields['password'].required = False  
+#         self.fields['password'].label = "كلمة المرور"   
+#         self.fields['password'].required = False  
         
-        self.fields['first_name'].label = "الاسم الاول"   
-        self.fields['last_name'].label = " الاسم الاخير"   
+#         self.fields['first_name'].label = "الاسم الاول"   
+#         self.fields['last_name'].label = " الاسم الاخير"   
         
-        self.fields['is_staff'].label = "موظف"   
-        self.fields['is_staff'].help_text = "لدية صلاحيات محدودة"  
+#         self.fields['is_staff'].label = "موظف"   
+#         self.fields['is_staff'].help_text = "لدية صلاحيات محدودة"  
          
-        self.fields['is_active'].label = "نشط"   
-        self.fields['is_active'].help_text = "يعمل / لا يعمل .... بديل للحذف" 
+#         self.fields['is_active'].label = "نشط"   
+#         self.fields['is_active'].help_text = "يعمل / لا يعمل .... بديل للحذف" 
           
-        self.fields['is_superuser'].label = "مسئول"   
-        self.fields['is_superuser'].help_text = "لدية كل الصلاحيات لعمل كل شئ "   
+#         self.fields['is_superuser'].label = "مسئول"   
+#         self.fields['is_superuser'].help_text = "لدية كل الصلاحيات لعمل كل شئ "   

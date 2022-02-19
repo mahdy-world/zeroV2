@@ -55,7 +55,6 @@
                                     <th scope="col">الاسم الاول</th>
                                     <th scope="col">الاسم الاخير</th>
                                     <th scope="col">اسم المستخدم</th>
-                                    <th scope="col">موظف</th>
                                     <th scope="col">مسئول</th>
                                     <th scope="col">نشط</th>
                                     <th></th>
@@ -65,10 +64,9 @@
                                 {% for x in object_list  %}
                                 <tr>
                                     <td>
-                                        <div class="avatar-xs">
-                                            <span class="avatar-title rounded-circle">
-                                                {{forloop.counter}}                                            </span>
-                                        </div>
+                                       
+                                                {{forloop.counter}}                                          
+                                        
                                     </td>
                                     <td>
                                         {{x.first_name}}
@@ -83,18 +81,11 @@
                                         </span>
                                     </td>
                                     <td>
-                                       {% if x.is_staff == True %}
-                                       <i class='bx bx-check-circle' style='color:#10bb3f' ></i>
-                                       {% else %}
-                                       <i class='bx bx-check-circle' style='color:#959595' ></i>
-                                       {% endif %}
-                                    </td>
-                                    <td>
                                         
                                         {% if x.is_superuser == True %}
                                         <i class='bx bx-check-circle' style='color:#10bb3f' ></i>
                                         {% else %}
-                                        <i class='bx bx-check-circle' style='color:#959595' ></i>
+                                        <i class='bx bxs-x-circle' style='color:#db4e4e'  ></i>
                                         {% endif %}
                                             
                                     </td>
@@ -102,7 +93,7 @@
                                         {% if x.is_active == True %}
                                         <i class='bx bx-check-circle' style='color:#10bb3f' ></i>
                                         {% else %}
-                                        <i class='bx bx-check-circle' style='color:#959595' ></i>
+                                        <i class='bx bxs-x-circle' style='color:#db4e4e'  ></i>
                                         {% endif %}
                                     </td>
 

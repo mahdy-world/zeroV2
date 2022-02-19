@@ -95,6 +95,16 @@
                                                     <th class="col-lg-1 col-xl-1 col-md-1">
                                                         <button style="width: 100%" onclick="InSideCreate()" class="btn btn-success">اضافة</button>
                                                     </th>
+                                                    <th class="col-lg-1 col-xl-1 col-md-1">
+                                                        <a href="{% url 'Factories:FactoryInSideReport' object.id %}"
+                                                          style="width: 100%"
+                                                          class="btn btn-primary"
+                                                          target='_blank'
+                                                        >
+                                                        <i class="fas fa-file-alt"></i>
+                                                            تقرير 
+                                                        </a>
+                                                      </th>
                                                     
                                                 </tr>
 
@@ -156,11 +166,13 @@
                                                         <td><i class="fas fa-dollar-sign"></i> {{x.hour_price}} </td>
                                                         <td><i class="fas fa-dollar-sign"></i> {{x.total_account}} </td>
                                                         <td><i class="fas fa-user-tie"></i> {{x.admin}} </td>
-                                                        
-                                                        <td>
-                                                            <a href="{% url 'Factories:FactoryInSideUpdate' x.id %}" class="mr-3 text-warning" data-toggle="modal" data-target="#action_modal" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
-                                                            <a onclick="InsideDelete('{{x.id}}')" style="cursor: pointer;" class="text-danger" ><i class="mdi mdi-close font-size-18"></i></a>
+                                                       {% if request.user.is_superuser %}
+                                                       <td>
+                                                        <a href="{% url 'Factories:FactoryInSideUpdate' x.id %}" class="mr-3 text-warning" data-toggle="modal" data-target="#action_modal" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                                        <a onclick="InsideDelete('{{x.id}}')" style="cursor: pointer;" class="text-danger" ><i class="mdi mdi-close font-size-18"></i></a>
                                                         </td>
+                                                       {% endif %} 
+                                                       
                                                         
                                                     </tr>
                                                 {% endfor %}

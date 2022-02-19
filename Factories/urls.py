@@ -24,16 +24,18 @@ urlpatterns = [
     path('outside/<int:pk>', FactoryOutside.as_view(), name="FactoryOutside"),
     path('outside/<int:pk>/div/', FactoryOutSide_div.as_view(), name="FactoryOutSide_div"),
     path('outside/<int:pk>/update/', FactoryOutSideUpdate.as_view(), name="FactoryOutSideUpdate"),
+    path('outside/report/<int:pk>/', FactoryOutSideReport.as_view(), name="FactoryOutSideReport"),
     path('outside/create/', FactoryOutSideCreate, name="FactoryOutSideCreate"),# url for create function using ajax
     path('outside/delete/', FactoryOutsideDelete, name="FactoryOutsideDelete"), # url for delete function using ajax
-    
+    path('outside/print/<int:pk>/', PrintOutside , name="PrintOutside"),
     
     path('inside/<int:pk>', FactoryInside.as_view(), name="FactoryInside"),
     path('inside/<int:pk>/div/', FactoryInSide_div.as_view(), name="FactoryInSide_div"),
     path('inside/<int:pk>/update/', FactoryInSideUpdate.as_view(), name="FactoryInSideUpdate"), 
     path('inside/create/', FactoryInSideCreate, name="FactoryInSideCreate"),# url for create function using ajax
     path('inside/delete/', FactoryInsideDelete, name="FactoryInsideDelete"), # url for delete function using ajax
-    
+    path('inside/report/<int:pk>/', FactoryInSideReport.as_view(), name="FactoryInSideReport"),
+    path('inside/print/<int:pk>/', PrintInside , name="PrintInside"),
     
     
 ]

@@ -251,78 +251,7 @@ class FactoryPaymentUpdate(LoginRequiredMixin, UpdateView):
         else:
             return self.success_url
 
-
-class FactoryPaymentReport(LoginRequiredMixin, ListView):
-    login_url = '/auth/login/'
-    model = Payment
-    form = FactoryPaymentReportForm()
-    template_name = 'Factory_Reports/factory_payment_report.html'
-    
-   
-    def queryset(self):
-        if not self.request.GET.get('submit'):
-            queryset = None
-        else:
-            queryset = Payment.objects.filter(factory = self.kwargs['pk'])
-            if self.request.GET.get('from_date'):
-                queryset = queryset.filter(date__gte = self.request.GET.get('from_date'))
-            if self.request.GET.get('to_date'):
-                queryset = queryset.filter(date__lte = self.request.GET.get('to_date'))
-                                  
-        return queryset 
-    
-    def get_sum_price(self):
-        queryset = self.queryset()
-        if queryset != None:
-            sum_price =  queryset.aggregate(price=Sum('price')).get('price')
-        else:
-            sum_price = 0
-        total = {
-            'sum_price' :sum_price
-        }
-        return total
-    
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = self.form
-        context['summary'] = self.get_sum_price()
-        context['name'] = Factory.objects.get(id=self.kwargs['pk'])
-        return context
-
-def PrintPayment(request,pk):
-    factory = Factory.objects.get(id=pk)
-    system_info = SystemInformation.objects.all()
-    if system_info.count() > 0:
-        system_info = system_info.last()
-    else:
-        system_info = None
-            
-    queryset = Payment.objects.filter(factory=pk)
-    if request.GET.get('from_date'):
-        queryset = queryset.filter(date__gte = request.GET.get('from_date'))
-    if request.GET.get('to_date'):
-        queryset = queryset.filter(date__lte = request.GET.get('to_date'))
-    
-   
-    context = {
-        'queryset':queryset,
-        'count_price':  queryset.aggregate(price=Sum('price')).get('price'),
-        'system_info':system_info,
-        'date': datetime.now(),
-        'user': request.user.username,
-        'from_date': request.GET.get('from_date'),
-        'to_date': request.GET.get('to_date'),
-        'factory':factory,
-    }
-    html_string = render_to_string('Factory_Reports/print_payment.html', context)
-    html = weasyprint.HTML(string=html_string, base_url=request.build_absolute_uri())
-    pdf = html.write_pdf(stylesheets=[weasyprint.CSS('static/assets/css/invoice_pdf.css')], presentational_hints=True)
-    response = HttpResponse(pdf, content_type='application/pdf')
-    return response
-
-            
-            
-            
+         
 
 def FactoryPaymentCreate(request):
     if request.is_ajax():
@@ -378,7 +307,7 @@ class FactoryOutside(LoginRequiredMixin, DetailView):
         queryset = FactoryOutSide.objects.filter(factory=self.object)
         context = super().get_context_data(**kwargs)
         context['outSide'] = queryset.order_by('id')
-        context['title'] = 'المستلم من المصنع: ' + str(self.object)
+        context['title'] = 'الخارج من المصنع: ' + str(self.object)
         context['sum_weight'] = queryset.aggregate(weight=Sum('weight')).get('weight')
         context['sum_weight_after'] = queryset.aggregate(after=Sum('weight_after_loss')).get('after')
         context['form'] = FactoryOutSideForm(self.request.POST or None)
@@ -404,19 +333,20 @@ def FactoryOutSideCreate(request):
     if request.is_ajax():
         factory_id = request.POST.get('id')
         factory = Factory.objects.get(id=factory_id)
-        print(factory)
+        
         date = request.POST.get('date')
         weight = request.POST.get('weight')
         color = request.POST.get('color')
         percent_loss = request.POST.get('percent_loss')
         weight_after_loss = request.POST.get('weight_after_loss')
         admin = request.POST.get('admin')
+        user = User.objects.get(id=admin)
         
         if factory_id and date and admin  and weight and color and percent_loss and weight_after_loss:
             obj = FactoryOutSide()
             obj.factory = factory
             obj.date = date
-            obj.admin = admin
+            obj.admin = user
             obj.weight = weight
             obj.color = color
             obj.percent_loss = percent_loss
@@ -479,7 +409,7 @@ class FactoryInside(LoginRequiredMixin, DetailView):
         outSide = FactoryOutSide.objects.filter(factory=self.object)
         context = super().get_context_data(**kwargs)
         context['inSide'] = queryset.order_by('id')
-        context['title'] = 'الخارج لمصنع: ' + str(self.object)
+        context['title'] = 'الداخل لمصنع: ' + str(self.object)
         context['form'] = FactoryInSideForm(self.request.POST or None)
         context['sum_outside'] = outSide.aggregate(out=Sum('weight_after_loss')).get('out')
         context['sum_weight'] = queryset.aggregate(weight=Sum('weight')).get('weight')
@@ -541,6 +471,7 @@ def FactoryInSideCreate(request):
         hour_price = request.POST.get('hour_price')
         total_account = request.POST.get('total_account')
         admin = request.POST.get('admin')
+        user = User.objects.get(id=admin)
         
         if factory_id and date and weight and color and product and product_weight and product_count and product_time and hour_count and hour_price and total_account and admin:
     
@@ -556,7 +487,7 @@ def FactoryInSideCreate(request):
             obj.hour_count = hour_count
             obj.hour_price = hour_price
             obj.total_account = total_account
-            obj.admin = admin
+            obj.admin = user
             obj.save()
         
             if obj:
@@ -584,3 +515,222 @@ def FactoryInsideDelete(request):
         return JsonResponse(response)    
         
 
+
+class FactoryPaymentReport(LoginRequiredMixin, ListView):
+    login_url = '/auth/login/'
+    model = Payment
+    form = FactoryPaymentReportForm()
+    template_name = 'Factory_Reports/factory_payment_report.html'
+    
+   
+    def queryset(self):
+        if not self.request.GET.get('submit'):
+            queryset = None
+        else:
+            queryset = Payment.objects.filter(factory = self.kwargs['pk'])
+            if self.request.GET.get('from_date'):
+                queryset = queryset.filter(date__gte = self.request.GET.get('from_date'))
+            if self.request.GET.get('to_date'):
+                queryset = queryset.filter(date__lte = self.request.GET.get('to_date'))
+                                  
+        return queryset 
+    
+    def get_sum_price(self):
+        queryset = self.queryset()
+        if queryset != None:
+            sum_price =  queryset.aggregate(price=Sum('price')).get('price')
+        else:
+            sum_price = 0
+        total = {
+            'sum_price' :sum_price
+        }
+        return total
+    
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.form
+        context['summary'] = self.get_sum_price()
+        context['name'] = Factory.objects.get(id=self.kwargs['pk'])
+        return context
+    
+    
+class FactoryOutSideReport(LoginRequiredMixin, ListView):
+    login_url = '/auth/login/'
+    model = FactoryOutSide
+    form = FactoryPaymentReportForm()
+    template_name = 'Factory_Reports/factory_outside_report.html'
+    
+   
+    def queryset(self):
+        if not self.request.GET.get('submit'):
+            queryset = None
+        else:
+            queryset = FactoryOutSide.objects.filter(factory = self.kwargs['pk'])
+            if self.request.GET.get('from_date'):
+                queryset = queryset.filter(date__gte = self.request.GET.get('from_date'))
+            if self.request.GET.get('to_date'):
+                queryset = queryset.filter(date__lte = self.request.GET.get('to_date'))
+                                  
+        return queryset 
+    
+    def get_sum_outside(self):
+        queryset = self.queryset()
+        if queryset != None:
+            sum_weight =  queryset.aggregate(out=Sum('weight_after_loss')).get('out')
+        else:
+            sum_weight = 0
+        total = {
+            'sum_weight' :sum_weight
+        }
+        return total
+    
+    
+    
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.form
+        context['summary'] = self.get_sum_outside()
+        context['name'] = Factory.objects.get(id=self.kwargs['pk'])
+        return context
+    
+    
+class FactoryInSideReport(LoginRequiredMixin, ListView):
+    login_url = '/auth/login/'
+    model = FactoryInSide
+    form = FactoryPaymentReportForm()
+    template_name = 'Factory_Reports/factory_inside_report.html'
+    
+   
+    def queryset(self):
+        if not self.request.GET.get('submit'):
+            queryset = None
+        else:
+            queryset = FactoryInSide.objects.filter(factory = self.kwargs['pk'])
+            if self.request.GET.get('from_date'):
+                queryset = queryset.filter(date__gte = self.request.GET.get('from_date'))
+            if self.request.GET.get('to_date'):
+                queryset = queryset.filter(date__lte = self.request.GET.get('to_date'))
+                                  
+        return queryset 
+    
+    def get_sum_inside(self):
+        queryset = self.queryset()
+        if queryset != None:
+            sum_weight =  queryset.aggregate(out=Sum('total_account')).get('out')
+        else:
+            sum_weight = 0
+        total = {
+            'sum_weight' :sum_weight
+        }
+        return total
+    
+    
+    
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.form
+        context['summary'] = self.get_sum_inside()
+        context['name'] = Factory.objects.get(id=self.kwargs['pk'])
+        return context
+    
+
+
+
+def PrintPayment(request,pk):
+    factory = Factory.objects.get(id=pk)
+    system_info = SystemInformation.objects.all()
+    if system_info.count() > 0:
+        system_info = system_info.last()
+    else:
+        system_info = None
+            
+    queryset = Payment.objects.filter(factory=pk)
+    if request.GET.get('from_date'):
+        queryset = queryset.filter(date__gte = request.GET.get('from_date'))
+    if request.GET.get('to_date'):
+        queryset = queryset.filter(date__lte = request.GET.get('to_date'))
+    
+   
+    context = {
+        'queryset':queryset,
+        'count_price':  queryset.aggregate(price=Sum('price')).get('price'),
+        'system_info':system_info,
+        'date': datetime.now(),
+        'user': request.user.username,
+        'from_date': request.GET.get('from_date'),
+        'to_date': request.GET.get('to_date'),
+        'factory':factory,
+    }
+    html_string = render_to_string('Factory_Reports/print_payment.html', context)
+    html = weasyprint.HTML(string=html_string, base_url=request.build_absolute_uri())
+    pdf = html.write_pdf(stylesheets=[weasyprint.CSS('static/assets/css/invoice_pdf.css')], presentational_hints=True)
+    response = HttpResponse(pdf, content_type='application/pdf')
+    return response
+
+
+
+def PrintOutside(request,pk):
+    factory = Factory.objects.get(id=pk)
+    system_info = SystemInformation.objects.all()
+    if system_info.count() > 0:
+        system_info = system_info.last()
+    else:
+        system_info = None
+            
+    queryset = FactoryOutSide.objects.filter(factory=pk)
+    if request.GET.get('from_date'):
+        queryset = queryset.filter(date__gte = request.GET.get('from_date'))
+    if request.GET.get('to_date'):
+        queryset = queryset.filter(date__lte = request.GET.get('to_date'))
+    
+   
+    context = {
+        'queryset':queryset,
+        'sum_weight':queryset.aggregate(out=Sum('weight_after_loss')).get('out'),
+        'system_info':system_info,
+        'date': datetime.now(),
+        'user': request.user.username,
+        'from_date': request.GET.get('from_date'),
+        'to_date': request.GET.get('to_date'),
+        'factory':factory,
+    }
+    html_string = render_to_string('Factory_Reports/print_outside.html', context)
+    html = weasyprint.HTML(string=html_string, base_url=request.build_absolute_uri())
+    pdf = html.write_pdf(stylesheets=[weasyprint.CSS('static/assets/css/invoice_pdf.css')], presentational_hints=True)
+    response = HttpResponse(pdf, content_type='application/pdf')
+    return response
+
+
+
+def PrintInside(request,pk):
+    factory = Factory.objects.get(id=pk)
+    system_info = SystemInformation.objects.all()
+    if system_info.count() > 0:
+        system_info = system_info.last()
+    else:
+        system_info = None
+            
+    queryset = FactoryInSide.objects.filter(factory=pk)
+    if request.GET.get('from_date'):
+        queryset = queryset.filter(date__gte = request.GET.get('from_date'))
+    if request.GET.get('to_date'):
+        queryset = queryset.filter(date__lte = request.GET.get('to_date'))
+    
+   
+    context = {
+        'queryset':queryset,
+        'sum_weight':queryset.aggregate(out=Sum('total_account')).get('out'),
+        'system_info':system_info,
+        'date': datetime.now(),
+        'user': request.user.username,
+        'from_date': request.GET.get('from_date'),
+        'to_date': request.GET.get('to_date'),
+        'factory':factory,
+    }
+    html_string = render_to_string('Factory_Reports/print_inside.html', context)
+    html = weasyprint.HTML(string=html_string, base_url=request.build_absolute_uri())
+    pdf = html.write_pdf(stylesheets=[weasyprint.CSS('static/assets/css/invoice_pdf.css')], presentational_hints=True)
+    response = HttpResponse(pdf, content_type='application/pdf')
+    return response
+
+   

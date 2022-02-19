@@ -143,12 +143,11 @@ class UsersUpdate(LoginRequiredMixin, UpdateView):
         myform.username = form.cleaned_data.get("username")
         myform.first_name = form.cleaned_data.get("first_name")
         myform.last_name = form.cleaned_data.get("last_name")
-        myform.is_staff = form.cleaned_data.get("is_staff")
         myform.is_active = form.cleaned_data.get("is_active")
         myform.is_superuser = form.cleaned_data.get("is_superuser")
         if user_pass:
             myform.set_password(user_pass)
-            myform.save(update_fields=['username', 'first_name', 'last_name' , 'is_staff', 'is_active', 'is_superuser', 'password'])
+            myform.save(update_fields=['username', 'first_name', 'last_name' ,  'is_active', 'is_superuser', 'password'])
         else: 
-            myform.save(update_fields=['username', 'first_name', 'last_name' , 'is_staff', 'is_active', 'is_superuser',])
+            myform.save(update_fields=['username', 'first_name', 'last_name' ,  'is_active', 'is_superuser',])
         return redirect(self.get_success_url())    

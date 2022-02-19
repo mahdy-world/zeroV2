@@ -42,7 +42,7 @@ class FactoryOutSide(models.Model):
     color = models.CharField(null=True, max_length=50, blank=True, verbose_name="اللون")
     percent_loss = models.FloatField(null=True, blank=True, verbose_name="نسبة الهالك")
     weight_after_loss = models.FloatField(null=True, blank=True, verbose_name="الوزن بعد نسبة الهالك")
-    admin = models.CharField(null=True, max_length=50, blank=True, verbose_name='المسئول')
+    admin = models.ForeignKey(User,max_length=50, on_delete=models.CASCADE, null=True, verbose_name="المسئول")
     
     def __str__(self):
         return self.factory.name
@@ -64,7 +64,7 @@ class FactoryInSide(models.Model):
     hour_price = models.FloatField(null=True, blank=True, verbose_name="سعر الساعة")
     
     total_account = models.FloatField(null=True, blank=True, verbose_name="اجمالي الحساب جنية")
-    admin = models.CharField(null=True, max_length=50, blank=True, verbose_name='المسئول')
+    admin = models.ForeignKey(User,max_length=50, on_delete=models.CASCADE, null=True, verbose_name="المسئول")
     
     def __str__(self):
-        return self.admin
+        return self.factory.name

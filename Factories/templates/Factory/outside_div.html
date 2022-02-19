@@ -22,11 +22,13 @@
                 <td><span class="badge badge-warning"><i class="fas fa-percent"></i> {{x.percent_loss}}</span></td>
                 <td><span class="badge badge-danger font-size-18"><i class="fas fa-balance-scale"></i> {{x.weight_after_loss}}</span></td>
                 <td><i class="fas fa-user-tie"></i> {{x.admin}} </td>
-                
+                {% if request.user.is_spueruser %}
                 <td>
                     <a href="{% url 'Factories:FactoryPaymentUpdate' x.id %}" class="mr-3 text-warning" data-toggle="modal" data-target="#sub_modal" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
                     <a onclick="OutsideDelete('{{x.id}}')" style="cursor: pointer;" class="text-danger" ><i class="mdi mdi-close font-size-18"></i></a>
                 </td>
+                {% endif %}
+               
                 
             </tr>
         {% endfor %}

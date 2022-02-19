@@ -115,8 +115,8 @@
                           <th class="col-lg-2 col-xl-1 col-md-2">
                             <a href="{% url 'Factories:FactoryPaymentReport' object.id %}"
                               style="width: 100%"
-                              onclick="PaymentCreate()"
                               class="btn btn-primary"
+                              target='_blank'
                             >
                             <i class="fas fa-file-alt"></i>
                                 تقرير 
@@ -166,7 +166,7 @@
                           </td>
                           <td><i class="fas fa-user-tie"></i> {{x.admin}}</td>
                           <td><i class="fas fa-user"></i> {{x.recipient}}</td>
-
+                          {% if request.user.is_superuser %}
                           <td>
                             <a
                               href="{% url 'Factories:FactoryPaymentUpdate' x.id %}"
@@ -183,6 +183,8 @@
                               ><i class="mdi mdi-close font-size-18"></i
                             ></a>
                           </td>
+                          {% endif %}
+                          
                         </tr>
                         {% endfor %}
                       </tbody>

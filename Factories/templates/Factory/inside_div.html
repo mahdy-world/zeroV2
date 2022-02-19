@@ -32,11 +32,13 @@
                 <td><i class="fas fa-dollar-sign"></i> {{x.hour_price}} </td>
                 <td><i class="fas fa-dollar-sign"></i> {{x.total_account}} </td>
                 <td><i class="fas fa-user-tie"></i> {{x.admin}} </td>
-                
+                {% if request.user.is_superuser %}
                 <td>
                     <a href="{% url 'Factories:FactoryInSideUpdate' x.id %}" class="mr-3 text-warning" data-toggle="modal" data-target="#action_modal" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
                     <a onclick="InsideDelete('{{x.id}}')" style="cursor: pointer;" class="text-danger" ><i class="mdi mdi-close font-size-18"></i></a>
                 </td>
+                {% endif %}
+               
                 
             </tr>
         {% endfor %}

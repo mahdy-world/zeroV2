@@ -56,7 +56,9 @@ class FactoryPaymentReportForm(forms.Form):
         'placeholder':'الي ...'}),
         label= 'الي',
         )     
-        
+
+
+
         
 class FactoryOutSideForm(forms.ModelForm):
     class Meta:
@@ -64,7 +66,7 @@ class FactoryOutSideForm(forms.ModelForm):
         model = FactoryOutSide
         widgets = {
             'date' : forms.TextInput(attrs={'type':'date', 'class':'form-control',  'placeholder':'تاريخ الخروج...', 'id':'date'}),
-            'admin' : forms.TextInput(attrs={'class':'form-control', 'min':'1', 'placeholder':'المسئول...', 'id':'admin'}),
+            'admin' : forms.Select(attrs={'class':'form-control',  'placeholder':'المسئول...', 'id':'admin'}),
             'weight' : forms.NumberInput(attrs={'class':'form-control', 'min':'1', 'placeholder':'الوزن...', 'id':'weight'}),
             'color' : forms.TextInput(attrs={'class':'form-control', 'min':'1', 'placeholder':'اللون...', 'id':'color'}),
             'percent_loss' : forms.NumberInput(attrs={'class':'form-control', 'min':'1', 'placeholder':'نسبة الهالك...', 'id':'percent_loss'}),
@@ -89,5 +91,5 @@ class FactoryInSideForm(forms.ModelForm):
             'hour_count' : forms.NumberInput(attrs={ 'class':'form-control', 'min':'1', 'placeholder':'  عدد الساعات...', 'id':'hour_count'}),
             'hour_price' : forms.NumberInput(attrs={ 'class':'form-control', 'min':'1', 'placeholder':'سعر الساعة...', 'id':'hour_price'}),
             'total_account' : forms.NumberInput(attrs={ 'class':'form-control', 'min':'1', 'placeholder':'اجمالي الحساب...', 'id':'total_account'}),
-            'admin' : forms.TextInput(attrs={ 'class':'form-control', 'placeholder':' المسئول...', 'id':'admin'}),
+            'admin' : forms.Select(attrs={'class':'form-control',  'placeholder':'المسئول...', 'id':'admin'}),
         }

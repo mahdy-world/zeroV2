@@ -75,23 +75,17 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-4">
-
-                                    <div class="form-group">
-                                        <i class="fas fa-user-tie fa-2x"></i>
-                                        {{form.is_staff|as_crispy_field}}
-                                    </div>
-                                </div>    
+                                 
                                
 
-                             <div class="col-4">
+                             <div class="col-6">
                                     <div class="form-group">
                                         <i class="fas fa-user-secret fa-2x"></i>
                                         {{form.is_superuser|as_crispy_field}}
                                     </div>
                                 </div>
 
-                                <div class="col-4">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <i class="fas fa-user-check fa-2x"></i>
                                         {{form.is_active|as_crispy_field}}
