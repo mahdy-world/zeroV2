@@ -1,4 +1,5 @@
-<div class="main-content" >
+<div class="main-content" style="background-image: url('/static/assets/images/main.jpg'); background-repeat: no-repeat;
+background-size: cover;">
 
     <div class="page-content">
         <div class="container">
@@ -39,7 +40,7 @@
 
             
             <div class="row">
-                <div class="col-xl-8 col-lg-6 col-md-6 ">
+                <div class="col-xl-4 col-lg-6 col-md-6 ">
                     <a href="" data-toggle="modal" data-target="#factory_modal">
                         <div class="container_new  "> 
                             <div class="card">
@@ -54,174 +55,178 @@
                     </a>
                 </div>
 
-
-                <!-- <div class="col-xl-3 col-lg-6 col-md-6">
-                     <a href="{% url 'SpareParts:SparePartsOrderList' %}">
-                        <div class="container_new">
-                            <div class="card">
-                              <div class="imgBx">
-                                <img class="image" src="/static/assets/images/vector/print.png">
-                              </div>
-                              <div class="contentBx">
-                                <h2>طلبيات قطع الغيار</h2>
-                              </div>
-                            </div>
-                          </div>
-                     </a> 
-                </div>
-
+                {% if equest.user.has_access_to_spareParts %}
                 <div class="col-xl-3 col-lg-6 col-md-6">
-                    <a href="{% url 'SpareParts:SparePartsSupplierList' %}">
-                        <div class="container_new">
-                            <div class="card">
-                                <div class="imgBx">
-                                    <img class="image" src="/static/assets/images/vector/suppliers.png">
-                                </div>
-                                <div class="contentBx">
-                                    <h2>موردين قطع الغيار</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    
-                </div>
+                    <a href="{% url 'SpareParts:SparePartsOrderList' %}">
+                       <div class="container_new">
+                           <div class="card">
+                             <div class="imgBx">
+                               <img class="image" src="/static/assets/images/vector/print.png">
+                             </div>
+                             <div class="contentBx">
+                               <h2>طلبيات قطع الغيار</h2>
+                             </div>
+                           </div>
+                         </div>
+                    </a> 
+               </div>
 
-                <div class="col-xl-3 col-lg-6 col-md-6">
-                   <a href="{% url 'SpareParts:SparePartsWarehouseList' %}">
+               <div class="col-xl-3 col-lg-6 col-md-6">
+                   <a href="{% url 'SpareParts:SparePartsSupplierList' %}">
+                       <div class="container_new">
+                           <div class="card">
+                               <div class="imgBx">
+                                   <img class="image" src="/static/assets/images/vector/suppliers.png">
+                               </div>
+                               <div class="contentBx">
+                                   <h2>موردين قطع الغيار</h2>
+                               </div>
+                           </div>
+                       </div>
+                   </a>
+                   
+               </div>
+
+               <div class="col-xl-3 col-lg-6 col-md-6">
+                  <a href="{% url 'SpareParts:SparePartsWarehouseList' %}">
+                   <div class="container_new">
+                       <div class="card">
+                           <div class="imgBx">
+                               <img class="image" src="/static/assets/images/vector/warehouse.png">
+                           </div>
+                           <div class="contentBx">
+                               <h2>مخازن قطع الغيار</h2>
+                           </div>
+                       </div>
+                   </div>
+                  </a>
+               </div>
+
+               <div class="col-xl-4 col-lg-6 col-md-6">
+                   <a href="{% url 'SpareParts:SparePartsNameList' %}">
+                       <div class="container_new">
+                           <div class="card">
+                               <div class="imgBx">
+                                   <img class="image" src="/static/assets/images/vector/sparepartsname.png">
+                               </div>
+                               <div class="contentBx">
+                                   <h2>اصناف قطع الغيار</h2>
+                               </div>
+                           </div>
+                       </div>
+                   </a>
+               </div>
+
+               <div class="col-xl-4 col-lg-6 col-md-6">
+                   <a href="{% url 'SpareParts:SpareTypeList' %}">
+                       <div class="container_new">
+                           <div class="card">
+                               <div class="imgBx">
+                                   <img class="image" src="/static/assets/images/vector/sparetype.png">
+                               </div>
+                               <div class="contentBx">
+                                   <h2>انواع قطع الغيار</h2>
+                               </div>
+                           </div>
+                       </div>
+                   </a>
+               </div>
+               {% endif %}
+
+               {% if request.user.has_access_to_machine %}
+               <div class="col-xl-4 col-lg-6 col-md-6">
+                <a href=""> 
                     <div class="container_new">
                         <div class="card">
-                            <div class="imgBx">
-                                <img class="image" src="/static/assets/images/vector/warehouse.png">
-                            </div>
-                            <div class="contentBx">
-                                <h2>مخازن قطع الغيار</h2>
-                            </div>
-                        </div>
-                    </div>
-                   </a>
-                </div>
-
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <a href="{% url 'SpareParts:SparePartsNameList' %}">
-                        <div class="container_new">
-                            <div class="card">
-                                <div class="imgBx">
-                                    <img class="image" src="/static/assets/images/vector/sparepartsname.png">
-                                </div>
-                                <div class="contentBx">
-                                    <h2>اصناف قطع الغيار</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <a href="{% url 'SpareParts:SpareTypeList' %}">
-                        <div class="container_new">
-                            <div class="card">
-                                <div class="imgBx">
-                                    <img class="image" src="/static/assets/images/vector/sparetype.png">
-                                </div>
-                                <div class="contentBx">
-                                    <h2>انواع قطع الغيار</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <a href=""> 
-                        <div class="container_new">
-                            <div class="card">
-                              <div class="imgBx">
-                                <img class="image" src="/static/assets/images/vector/Invoice1.png">
-                              </div>
-                              <div class="contentBx">
-                                <h2>مبيعات المكينات</h2>
-                              </div>
-                            </div>
+                          <div class="imgBx">
+                            <img class="image" src="/static/assets/images/vector/Invoice1.png">
                           </div>
-                    </a>  
-                </div>
-
-
-                <div class="col-xl-3 col-lg-6 col-md-6">
-                     <a href="{% url 'Machines:MachinesOrdersList' %}">
-                        <div class="container_new">
-                            <div class="card">
-                              <div class="imgBx">
-                                <img class="image" src="/static/assets/images/vector/print.png">
-                              </div>
-                              <div class="contentBx">
-                                <h2>طلبيات المكينات</h2>
-                              </div>
-                            </div>
+                          <div class="contentBx">
+                            <h2>مبيعات المكينات</h2>
                           </div>
-                     </a> 
-                </div>
-
-                <div class="col-xl-3 col-lg-6 col-md-6">
-                    <a href="{% url 'Machines:suppliers_active_list' %}">
-                        <div class="container_new">
-                            <div class="card">
-                                <div class="imgBx">
-                                    <img class="image" src="/static/assets/images/vector/suppliers.png">
-                                </div>
-                                <div class="contentBx">
-                                    <h2>موردين المكينات</h2>
-                                </div>
-                            </div>
                         </div>
-                    </a>
-                </div>
+                      </div>
+                </a>  
+            </div>
+             
+             <div class="col-xl-3 col-lg-6 col-md-6">
+                  <a href="{% url 'Machines:MachinesOrdersList' %}">
+                     <div class="container_new">
+                         <div class="card">
+                           <div class="imgBx">
+                             <img class="image" src="/static/assets/images/vector/print.png">
+                           </div>
+                           <div class="contentBx">
+                             <h2>طلبيات المكينات</h2>
+                           </div>
+                         </div>
+                       </div>
+                  </a> 
+             </div>
 
-                <div class="col-xl-3 col-lg-6 col-md-6">
-                    <a href="{% url 'Machines:warehouses_active_list' %}">
-                        <div class="container_new">
-                            <div class="card">
-                                <div class="imgBx">
-                                    <img class="image" src="/static/assets/images/vector/warehouse.png">
-                                </div>
-                                <div class="contentBx">
-                                    <h2>مخازن المكينات</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+             <div class="col-xl-3 col-lg-6 col-md-6">
+                 <a href="{% url 'Machines:suppliers_active_list' %}">
+                     <div class="container_new">
+                         <div class="card">
+                             <div class="imgBx">
+                                 <img class="image" src="/static/assets/images/vector/suppliers.png">
+                             </div>
+                             <div class="contentBx">
+                                 <h2>موردين المكينات</h2>
+                             </div>
+                         </div>
+                     </div>
+                 </a>
+             </div>
 
-                <div class="col-xl-3 col-lg-6 col-md-6">
-                    <a href="{% url 'Machines:names_active_list' %}">
-                        <div class="container_new">
-                            <div class="card">
-                                <div class="imgBx">
-                                    <img class="image" src="/static/assets/images/vector/sparepartsname.png">
-                                </div>
-                                <div class="contentBx">
-                                    <h2>اصناف المكينات</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+             <div class="col-xl-3 col-lg-6 col-md-6">
+                 <a href="{% url 'Machines:warehouses_active_list' %}">
+                     <div class="container_new">
+                         <div class="card">
+                             <div class="imgBx">
+                                 <img class="image" src="/static/assets/images/vector/warehouse.png">
+                             </div>
+                             <div class="contentBx">
+                                 <h2>مخازن المكينات</h2>
+                             </div>
+                         </div>
+                     </div>
+                 </a>
+             </div>
 
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <a href="{% url 'Machines:types_active_list' %}">
-                        <div class="container_new">
-                            <div class="card">
-                                <div class="imgBx">
-                                    <img class="image" src="/static/assets/images/vector/sparetype.png">
-                                </div>
-                                <div class="contentBx">
-                                    <h2>انواع المكينات</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div> -->
+             <div class="col-xl-3 col-lg-6 col-md-6">
+                 <a href="{% url 'Machines:names_active_list' %}">
+                     <div class="container_new">
+                         <div class="card">
+                             <div class="imgBx">
+                                 <img class="image" src="/static/assets/images/vector/sparepartsname.png">
+                             </div>
+                             <div class="contentBx">
+                                 <h2>اصناف المكينات</h2>
+                             </div>
+                         </div>
+                     </div>
+                 </a>
+             </div>
 
+             <div class="col-xl-4 col-lg-6 col-md-6">
+                 <a href="{% url 'Machines:types_active_list' %}">
+                     <div class="container_new">
+                         <div class="card">
+                             <div class="imgBx">
+                                 <img class="image" src="/static/assets/images/vector/sparetype.png">
+                             </div>
+                             <div class="contentBx">
+                                 <h2>انواع المكينات</h2>
+                             </div>
+                         </div>
+                     </div>
+                 </a>
+             </div> 
+
+               {% endif %}
+               
+                {% if request.user.has_access_to_treasury %}
                 <div class="col-xl-4 col-lg-6 col-md-6">
                     <a data-toggle="modal" data-target="#bank_invoice_modal">
                         <div class="container_new">
@@ -236,6 +241,26 @@
                         </div>
                     </a>
                 </div>
+                {% endif %}
+
+                
+                {% if request.user.has_access_to_products %}
+                <div class="col-xl-4 col-lg-6 col-md-6">
+                    <a data-toggle="modal" data-target="#product_modal">
+                        <div class="container_new">
+                            <div class="card">
+                                <div class="imgBx">
+                                    <img class="image" src="/static/assets/images/vector/product.png">
+                                </div>
+                                <div class="contentBx">
+                                    <h2>المنتجات</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endif %}
+              
 
                 <div class="col-xl-4 col-lg-6 col-md-6">
                     <a data-toggle="modal" data-target="#bank_invoice_modal">
@@ -252,7 +277,7 @@
                     </a>
                 </div>
 
-                <div class="col-xl-8 col-lg-6 col-md-6">
+                <div class="col-xl-4 col-lg-6 col-md-6">
                     <a data-toggle="modal" data-target="#user_invoice_modal">
                         <div class="container_new">
                             <div class="card">

@@ -27,6 +27,7 @@ urlpatterns = [
     path('machines/',include('Machines.urls')),
     path('treasury/',include('Treasury.urls')),
     path('factory/', include('Factories.urls')),
+    path('product/', include('Products.urls')),
     path('__debug__/', include('debug_toolbar.urls')),
 ]
 

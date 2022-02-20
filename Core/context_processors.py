@@ -1,6 +1,9 @@
 import datetime
+from itertools import product
 from django.http import request
 from Core.models import SystemInformation
+from Factories.models import Factory
+from Products.models import Product
 from SpareParts.models import *
 from Machines.models import * 
 from django.utils import timezone as tz
@@ -12,8 +15,10 @@ def allcontext(request):
     info = SystemInformation.objects.filter(id=1)
     spare_parts = SparePartsNames.objects.filter(deleted=0)
     machines = MachinesNames.objects.filter(deleted=False)
+    factorys = Factory.objects.filter(deleted=False)
     spare_order = SparePartsOrders.objects.filter(deleted=False)
     machine_order = MachinesOrders.objects.filter(deleted=False)
+    products = Product.objects.filter(deleted=False)
     
     
     
@@ -46,6 +51,8 @@ def allcontext(request):
         'machines_count' : machines_count,
         'spareparts_count' : spareparts_count,
         'machines_supplier' : machines_supplier,
+        'factorys' : factorys,
+        'products':products
         
 
     }

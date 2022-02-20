@@ -8,6 +8,7 @@ from django.contrib import messages
 from Core.forms import SystemInfoForm
 from Machines.models import *
 from Core.models import SystemInformation
+from Products.models import Product
 from SpareParts.models import SparePartsOrders
 from Factories.models import Factory
 
@@ -93,12 +94,33 @@ class FactorySearch(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['message'] = 'active'
+        context['page'] = 'active'
+        context['type'] = 'list'
         context['count'] = self.model.objects.filter(deleted=False).count()
         return context
     
     def get_queryset(self):
         search = self.request.GET.get("factory")  
         queryset = self.model.objects.filter(name__icontains=search, deleted=False)
+        return queryset
+    
+    
+class ProductSearch(LoginRequiredMixin, ListView):
+    login_url = '/auth/login/'
+    model = Product
+    template_name = 'Product/product_list.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['message'] = 'active'
+        context['page'] = 'active'
+        context['type'] = 'list'
+        context['count'] = self.model.objects.filter(deleted=False).count()
+        return context
+    
+    def get_queryset(self):
+        product_serach = self.request.GET.get("product")  
+        queryset = self.model.objects.filter(name__icontains=product_serach, deleted=False)
         return queryset
 
 

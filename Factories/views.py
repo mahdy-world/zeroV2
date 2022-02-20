@@ -1,5 +1,4 @@
 
-from asyncio.windows_events import NULL
 import datetime
 from django.db.models.aggregates import Sum
 from django.http import HttpResponse, JsonResponse, response
@@ -28,7 +27,7 @@ class FactoryList(LoginRequiredMixin, ListView):
     template_name = 'Factory/factory_list.html'
     
     def get_queryset(self):
-        qureyset = self.model.objects.filter(deleted=False).order_by('id')
+        qureyset = self.model.objects.filter(deleted=False).order_by('-id')
         return qureyset
     
     def get_context_data(self, **kwargs):
@@ -49,7 +48,7 @@ class FactoryTrachList(LoginRequiredMixin, ListView):
     template_name = 'Factory/factory_list.html'
     
     def get_queryset(self):
-        queyset = self.model.objects.filter(deleted=True).order_by('id')
+        queyset = self.model.objects.filter(deleted=True).order_by('-id')
         return queyset
     
     def get_context_data(self, **kwargs):
@@ -81,7 +80,7 @@ class FactoryCreate(LoginRequiredMixin, CreateView):
             return self.request.POST.get('url')
         else:
             return self.success_url
-        # return reverse('SpareParts:SpareTypeList',)
+        
 
 
 
@@ -169,7 +168,7 @@ class FactorySuperDelete(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'حذف نوع قطعة غيار بشكل نهائي: ' + str(self.object)
+        context['title'] = 'حذف المصنع : ' + str(self.object)
         context['message'] = 'super_delete'
         context['action_url'] = reverse_lazy('Factories:FactorySuperDelete', kwargs={'pk': self.object.id})
         return context
@@ -196,7 +195,7 @@ class FactoryPayment(LoginRequiredMixin, DetailView):
         
         
         context = super().get_context_data(**kwargs)
-        context['payment'] = queryset.order_by('id')
+        context['payment'] = queryset.order_by('-id')
         context['payment_sum'] = payment_sum
         context['total_account'] = total_account
         context['total'] = total
@@ -212,7 +211,7 @@ class FactoryPayment_div(LoginRequiredMixin, DetailView):
     template_name = 'Factory/payment_div.html'
     
     def get_context_data(self, **kwargs):
-        queryset = Payment.objects.filter(factory=self.object)
+        queryset = Payment.objects.filter(factory=self.object).order_by('-id')
         payment_sum = queryset.aggregate(price=Sum('price')).get('price')
         total_account =FactoryInSide.objects.filter(factory=self.object).aggregate(total=Sum('total_account')).get('total')
         total = ''
@@ -221,7 +220,7 @@ class FactoryPayment_div(LoginRequiredMixin, DetailView):
         
         
         context = super().get_context_data(**kwargs)
-        context['payment'] = queryset.order_by('id')
+        context['payment'] = queryset.order_by('-id')
         context['payment_sum'] = payment_sum
         context['total_account'] = total_account
         context['total'] = total
@@ -306,7 +305,7 @@ class FactoryOutside(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         queryset = FactoryOutSide.objects.filter(factory=self.object)
         context = super().get_context_data(**kwargs)
-        context['outSide'] = queryset.order_by('id')
+        context['outSide'] = queryset.order_by('-id')
         context['title'] = 'الخارج من المصنع: ' + str(self.object)
         context['sum_weight'] = queryset.aggregate(weight=Sum('weight')).get('weight')
         context['sum_weight_after'] = queryset.aggregate(after=Sum('weight_after_loss')).get('after')
@@ -323,7 +322,7 @@ class FactoryOutSide_div(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         queryset = FactoryOutSide.objects.filter(factory=self.object)
         context = super().get_context_data(**kwargs)
-        context['outSide'] = queryset.order_by('id')
+        context['outSide'] = queryset.order_by('-id')
         context['sum_weight'] = queryset.aggregate(weight=Sum('weight')).get('weight')
         context['sum_weight_after'] = queryset.aggregate(after=Sum('weight_after_loss')).get('after')
         return context    
@@ -408,7 +407,7 @@ class FactoryInside(LoginRequiredMixin, DetailView):
         queryset = FactoryInSide.objects.filter(factory=self.object)
         outSide = FactoryOutSide.objects.filter(factory=self.object)
         context = super().get_context_data(**kwargs)
-        context['inSide'] = queryset.order_by('id')
+        context['inSide'] = queryset.order_by('-id')
         context['title'] = 'الداخل لمصنع: ' + str(self.object)
         context['form'] = FactoryInSideForm(self.request.POST or None)
         context['sum_outside'] = outSide.aggregate(out=Sum('weight_after_loss')).get('out')
@@ -448,7 +447,7 @@ class FactoryInSide_div(LoginRequiredMixin, DetailView):
         queryset = FactoryInSide.objects.filter(factory=self.object)
         outSide = FactoryOutSide.objects.filter(factory=self.object)
         context = super().get_context_data(**kwargs)
-        context['inSide'] = queryset.order_by('id')
+        context['inSide'] = queryset.order_by('-id')
         context['sum_outside'] = outSide.aggregate(out=Sum('weight_after_loss')).get('out')
         context['sum_weight'] = queryset.aggregate(weight=Sum('weight')).get('weight')
         context['sum_weight_after'] = queryset.aggregate(after=Sum('total_account')).get('after')
@@ -527,7 +526,7 @@ class FactoryPaymentReport(LoginRequiredMixin, ListView):
         if not self.request.GET.get('submit'):
             queryset = None
         else:
-            queryset = Payment.objects.filter(factory = self.kwargs['pk'])
+            queryset = Payment.objects.filter(factory = self.kwargs['pk']).order_by('-id')
             if self.request.GET.get('from_date'):
                 queryset = queryset.filter(date__gte = self.request.GET.get('from_date'))
             if self.request.GET.get('to_date'):
@@ -565,7 +564,7 @@ class FactoryOutSideReport(LoginRequiredMixin, ListView):
         if not self.request.GET.get('submit'):
             queryset = None
         else:
-            queryset = FactoryOutSide.objects.filter(factory = self.kwargs['pk'])
+            queryset = FactoryOutSide.objects.filter(factory = self.kwargs['pk']).order_by('-id')
             if self.request.GET.get('from_date'):
                 queryset = queryset.filter(date__gte = self.request.GET.get('from_date'))
             if self.request.GET.get('to_date'):
@@ -605,7 +604,7 @@ class FactoryInSideReport(LoginRequiredMixin, ListView):
         if not self.request.GET.get('submit'):
             queryset = None
         else:
-            queryset = FactoryInSide.objects.filter(factory = self.kwargs['pk'])
+            queryset = FactoryInSide.objects.filter(factory = self.kwargs['pk']).order_by('-id')
             if self.request.GET.get('from_date'):
                 queryset = queryset.filter(date__gte = self.request.GET.get('from_date'))
             if self.request.GET.get('to_date'):
@@ -644,7 +643,7 @@ def PrintPayment(request,pk):
     else:
         system_info = None
             
-    queryset = Payment.objects.filter(factory=pk)
+    queryset = Payment.objects.filter(factory=pk).order_by('-id')
     if request.GET.get('from_date'):
         queryset = queryset.filter(date__gte = request.GET.get('from_date'))
     if request.GET.get('to_date'):
@@ -677,7 +676,7 @@ def PrintOutside(request,pk):
     else:
         system_info = None
             
-    queryset = FactoryOutSide.objects.filter(factory=pk)
+    queryset = FactoryOutSide.objects.filter(factory=pk).order_by('-id')
     if request.GET.get('from_date'):
         queryset = queryset.filter(date__gte = request.GET.get('from_date'))
     if request.GET.get('to_date'):
@@ -710,7 +709,7 @@ def PrintInside(request,pk):
     else:
         system_info = None
             
-    queryset = FactoryInSide.objects.filter(factory=pk)
+    queryset = FactoryInSide.objects.filter(factory=pk).order_by('-id')
     if request.GET.get('from_date'):
         queryset = queryset.filter(date__gte = request.GET.get('from_date'))
     if request.GET.get('to_date'):

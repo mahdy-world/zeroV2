@@ -53,7 +53,7 @@ class FactoryInSide(models.Model):
     date = models.DateField(null=True, verbose_name="التاريخ", default=date.today)
     factory = models.ForeignKey(Factory, on_delete=models.CASCADE, verbose_name="المصنع")
     color = models.CharField(null=True, max_length=50, blank=True, verbose_name="اللون")
-    product = models.CharField(max_length=50, verbose_name="الموديل")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,  verbose_name="الموديل")
     
     weight = models.FloatField(null=True, blank=True, verbose_name=" الوزن المستلم جرام")
     product_weight = models.FloatField(null=True, blank=True, verbose_name="وزن القطعة جرام")

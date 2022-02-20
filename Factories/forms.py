@@ -1,7 +1,5 @@
-from pyexpat import model
 from django import forms
 from .models import *
-from django.utils.timezone import now
 
 class FactoryForm(forms.ModelForm):
     class Meta:
@@ -84,7 +82,7 @@ class FactoryInSideForm(forms.ModelForm):
             'date' : forms.TextInput(attrs={'type':'date', 'class':'form-control',  'placeholder':'تاريخ الاستلام...', 'id':'date'}),
             'weight' : forms.NumberInput(attrs={ 'class':'form-control', 'min':'1', 'placeholder':'الوزن المستلم...', 'id':'weight'}),
             'color' : forms.TextInput(attrs={ 'class':'form-control', 'placeholder':' اللون...', 'id':'color'}),
-            'product' : forms.TextInput(attrs={ 'class':'form-control', 'placeholder':' المنتج...', 'id':'product'}),
+            'product' : forms.Select(attrs={ 'class':'form-control', 'placeholder':' المنتج...', 'id':'product'}),
             'product_weight' : forms.NumberInput(attrs={ 'class':'form-control', 'min':'1', 'placeholder':' وزن القطعة...', 'id':'product_weight'}),
             'product_time' : forms.NumberInput(attrs={ 'class':'form-control', 'min':'1', 'placeholder':' وقت القطعة...', 'id':'product_time'}),
             'product_count' : forms.NumberInput(attrs={ 'class':'form-control', 'min':'1', 'placeholder':'  عدد القطع...', 'id':'product_count'}),

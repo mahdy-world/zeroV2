@@ -266,34 +266,67 @@
                
                {% if request.user.has_access_to_factory %}
                    <!-- المصانع  -->
-                <li>
-                    <a href="javascript: void(0);"  data-toggle="modal" data-target="#factory_modal" class="has-arrow waves-effect">
-                        <i class='bx bxs-factory bx-sm'></i>
-                        <span key="t-ecommerce"> المصانع</span>
-                    </a>
-                    <ul class="sub-menu bg-light" aria-expanded="false">
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <i class='bx bxs-factory bx-sm'></i>
-                                <span key="t-ecommerce">  المصانع</span>
-                            </a>
-                            <ul class="sub-menu bg-light" aria-expanded="false">
+                    <li>
+                        <a href="javascript: void(0);"  data-toggle="modal" data-target="#factory_modal" class="has-arrow waves-effect">
+                            <i class='bx bxs-factory bx-sm'></i>
+                            <span key="t-ecommerce"> المصانع</span>
+                        </a>
+                        <ul class="sub-menu bg-light" aria-expanded="false">
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class='bx bxs-factory bx-sm'></i>
+                                    <span key="t-ecommerce">  المصانع</span>
+                                </a>
+                                <ul class="sub-menu bg-light" aria-expanded="false">
 
-                                <li><a href="{% url 'Factories:FactoryList' %}"  key="t-products"><i class='bx bx-list-ul' ></i>
-                                قائمة المصانع </a></li>
+                                    <li><a href="{% url 'Factories:FactoryList' %}"  key="t-products"><i class='bx bx-list-ul' ></i>
+                                    قائمة المصانع </a></li>
 
-                                <li><a href="{% url 'Factories:FactoryCreate' %}" data-target="#sub_modal" data-toggle="modal"  key="t-product-detail"> <i class='bx bxs-add-to-queue'></i>
-                                اضافة مصنع جديد</a></li>
+                                    <li><a href="{% url 'Factories:FactoryCreate' %}" data-target="#sub_modal" data-toggle="modal"  key="t-product-detail"> <i class='bx bxs-add-to-queue'></i>
+                                    اضافة مصنع جديد</a></li>
 
-                                <li><a href="{% url 'Factories:FactoryTrachList' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
-                                    سلة المهملاات</a></li>
+                                    <li><a href="{% url 'Factories:FactoryTrachList' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
+                                        سلة المهملاات</a></li>
 
-                            </ul>
-                        </li>
-                        
-                    </ul>
-                </li>
+                                </ul>
+                            </li>
+                            
+                        </ul>
+                    </li>
                {% endif %}
+
+
+               {% if request.user.has_access_to_products %}
+                   <!-- المنتجات  -->
+                    <li>
+                        <a href="javascript: void(0);"  data-toggle="modal" data-target="#product_modal" class="has-arrow waves-effect">
+                            <i class='bx bxs-t-shirt bx-sm'></i>
+                            <span key="t-ecommerce"> المنتجات</span>
+                        </a>
+                        <ul class="sub-menu bg-light" aria-expanded="false">
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class='bx bxs-t-shirt bx-sm'></i>
+                                    <span key="t-ecommerce">  المنتجات</span>
+                                </a>
+                                <ul class="sub-menu bg-light" aria-expanded="false">
+
+                                    <li><a href="{% url 'Products:ProductList' %}"  key="t-products"><i class='bx bx-list-ul' ></i>
+                                    قائمة المنتجات </a></li>
+
+                                    <li><a href="{% url 'Products:ProductCreate' %}" data-target="#sub_modal" data-toggle="modal"  key="t-product-detail"> <i class='bx bxs-add-to-queue'></i>
+                                    اضافة منتج جديد</a></li>
+
+                                    <li><a href="{% url 'Products:ProductTrachList' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
+                                        سلة المهملاات</a></li>
+
+                                </ul>
+                            </li>
+                            
+                        </ul>
+                    </li>
+               {% endif %}
+                   
                    
                    
                 
