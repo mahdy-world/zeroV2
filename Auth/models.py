@@ -53,6 +53,15 @@ class User(AbstractUser):
         if setting.wools_active == True:
             return True 
         else:
+            return False 
+        
+               
+    # permission for workers    
+    def has_access_to_worker(self):
+        setting = Modules.objects.all().first()
+        if setting.worker_active == True:
+            return True 
+        else:
             return False        
         
     

@@ -21,6 +21,7 @@ class Modules(models.Model):
     factory_active = models.BooleanField(default=True, verbose_name="تنشيط المصانع")
     products_active = models.BooleanField(default=True, verbose_name="تنشيط المنتجات")
     wools_active = models.BooleanField(default=True, verbose_name="تنشيط مخازن الصوف ")
+    worker_active = models.BooleanField(default=True, verbose_name="تنشيط مخازن العمال ")
     
     def __str__(self):
         return "عناصر النظام"    

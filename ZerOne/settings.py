@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'Products',
     'Factories',
-    'Wool'
+    'Wool',
+    'Workers'
 
 ]
 
