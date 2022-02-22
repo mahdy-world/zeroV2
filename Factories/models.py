@@ -38,7 +38,7 @@ class FactoryOutSide(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ العملية")
     date = models.DateField(null=True, verbose_name="التاريخ", default=date.today)
     factory = models.ForeignKey(Factory, on_delete=models.CASCADE, verbose_name="المصنع")
-    weight = models.FloatField(null=True, blank=True, verbose_name="الوزن جرام")
+    weight = models.FloatField(null=True, blank=True, verbose_name="الوزن بالكيلو")
     color = models.CharField(null=True, max_length=50, blank=True, verbose_name="اللون")
     percent_loss = models.FloatField(null=True, blank=True, verbose_name="نسبة الهالك")
     weight_after_loss = models.FloatField(null=True, blank=True, verbose_name="الوزن بعد نسبة الهالك")
@@ -55,8 +55,8 @@ class FactoryInSide(models.Model):
     color = models.CharField(null=True, max_length=50, blank=True, verbose_name="اللون")
     product = models.ForeignKey(Product, on_delete=models.CASCADE,  verbose_name="الموديل")
     
-    weight = models.FloatField(null=True, blank=True, verbose_name=" الوزن المستلم جرام")
-    product_weight = models.FloatField(null=True, blank=True, verbose_name="وزن القطعة جرام")
+    weight = models.FloatField(null=True, blank=True, verbose_name=" الوزن المستلم بالكيلو")
+    product_weight = models.FloatField(null=True, blank=True, verbose_name="وزن القطعة بالجرام")
     product_time = models.FloatField(null=True, blank=True, verbose_name="زمن القطعة دقائق")
     product_count = models.FloatField(null=True, blank=True, verbose_name="عدد القطع")
     

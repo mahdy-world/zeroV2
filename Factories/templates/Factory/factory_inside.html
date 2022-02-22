@@ -141,7 +141,7 @@
                                                         <th>الوزن المستلم</th>
                                                         <th>اللون</th>
                                                         <th>المنتج</th>
-                                                        <th>وزن القطعة</th>
+                                                        <th>وزن القطعة بالجرام</th>
                                                         <th>وقت القطعة</th>
                                                         <th>عدد القطع</th>
                                                         <th>عدد الساعات</th>
@@ -189,7 +189,7 @@
                                                             <div class="d-flex flex-wrap">
                                                                 <div class="mr-3">
                                                                     <h3 class=" mb-2 text-light">اجمالي الوزن الخارج</h3>
-                                                                    <h3 class="mb-0 text-dark">{{sum_outside}} جرام</h3>
+                                                                    <h3 class="mb-0 text-dark">{{sum_outside}} كيلو جرام</h3>
                                                                 </div>
                 
                 
@@ -210,7 +210,7 @@
                                                             <div class="d-flex flex-wrap">
                                                                 <div class="mr-3">
                                                                     <h3 class=" mb-2 text-light">اجمالي الوزن المستلم</h3>
-                                                                    <h3 class="mb-0 text-dark">{{sum_weight}} جرام</h3>
+                                                                    <h3 class="mb-0 text-dark">{{sum_weight}} كيلو جرام</h3>
                                                                 </div>
                 
                 
@@ -254,7 +254,7 @@
 
                                         // حساب عدد القطع 
                                        $('#product_weight').on('change', function (){
-                                            const weight = $('#weight').val();
+                                            const weight = $('#weight').val() * 1000;
                                             const product_weight = $('#product_weight').val();
                                             let product_count = (weight / product_weight); 
                                             let product_count_value = $('#product_count').val((product_count).toFixed());

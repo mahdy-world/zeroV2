@@ -479,7 +479,7 @@ def FactoryInSideCreate(request):
             obj.date = date
             obj.weight = weight
             obj.color = color
-            obj.product = product
+            obj.product = Product.objects.get(id=product)
             obj.product_weight = product_weight
             obj.product_time = product_time
             obj.product_count = product_count
