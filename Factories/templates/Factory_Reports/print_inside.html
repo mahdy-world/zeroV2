@@ -31,8 +31,10 @@
           <th>اجمالي الحساب</th>
           <th>حساب الساعة</th>
           <th>عدد الساعات</th>
+          <th>نوع القطع</th>
           <th>عدد القطع</th>
           <th>المنتج </th>
+          <th>نوع الخامة </th>
           <th>اللون </th>
           <th>الوزن </th>
           <th>التاريخ</th>
@@ -44,8 +46,10 @@
             <td>{{x.total_account}}</td>
             <td>{{x.hour_price}}</td>
             <td>{{x.hour_count}}</td>
+            <td>{{x.get_product_type_display}}</td>
             <td>{{x.product_count}}</td>
             <td>{{x.product}}</td>
+            <td>{{x.get_wool_type_display}}</td>
             <td>{{x.color}}</td>
             <td>{{x.weight}}</td>
             <td>{{x.date|date:'Y-m-d'}}</td>

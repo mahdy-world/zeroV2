@@ -111,6 +111,7 @@
                                               <th>التاريخ</th>
                                               <th>الوزن</th>
                                               <th>اللون</th>
+                                              <th>نوع الخامة</th>
                                               <th>نسبة الهالك</th>
                                               <th>الوزن بعد نسبة الهالك</th>
                                               <th>المسئول</th>
@@ -131,6 +132,9 @@
                                               </td>
                                               <td>
                                                  {{x.color}}
+                                              </td>
+                                              <td>
+                                                 {{x.get_wool_type_display}}
                                               </td>
                                               <td>
                                                  {{x.percent_loss}}
