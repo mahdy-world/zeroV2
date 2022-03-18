@@ -322,7 +322,24 @@
 
                                 </ul>
                             </li>
-                            
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class='bx bxs-t-shirt bx-sm'></i>
+                                    <span key="t-ecommerce">  التجار</span>
+                                </a>
+                                <ul class="sub-menu bg-light" aria-expanded="false">
+
+                                    <li><a href="{% url 'Products:SellerList' %}"  key="t-products"><i class='bx bx-list-ul' ></i>
+                                    قائمة التجار </a></li>
+
+                                    <li><a href="{% url 'Products:SellerCreate' %}" data-target="#sub_modal" data-toggle="modal"  key="t-product-detail"> <i class='bx bxs-add-to-queue'></i>
+                                    اضافة تاجر جديد</a></li>
+
+                                    <li><a href="{% url 'Products:SellerTrashList' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
+                                        سلة المهملاات</a></li>
+
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                {% endif %}
