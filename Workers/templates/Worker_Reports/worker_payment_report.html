@@ -30,7 +30,7 @@
                         <div class="col-lg-12 ">
                           <div class="card shadow-lg">
                             <div class="card-body">
-                              <!-- خارج المصنع -->
+                              <!-- مسحوبات المصنع -->
                               <div class="tab-pane" id="processing" role="tabpanel">
                                 <div class="row">
                                   <div class="col-lg-12">
@@ -43,7 +43,7 @@
                                               style="color: white"
                                             >
                                             <i class="fas fa-file-alt"></i>
-                                              تقارير داخل مصنع : <span class="badge badge-danger"> {{name}}</span>
+                                              تقارير مسحوبات العامل : <span class="badge badge-danger"> {{name}}</span>
                                             </h3>
                                           </div>
                                         </div>
@@ -79,7 +79,7 @@
 
                                               <th>
                                                 <button type="submit" name="submit" id="print"  value="1" class="btn btn-primary"
-                                                onclick="document.getElementById('my_form').action = '{% url 'Factories:PrintInside' name.id  %}'; document.getElementById('my_form').target = '_blank' "
+                                                onclick="document.getElementById('my_form').action = '{% url 'Workers:PrintWorkerPayment' name.id  %}'; document.getElementById('my_form').target = '_blank' "
                                                 >  
                                                 <i class="fas fa-print"></i> 
                                                   طباعة
@@ -109,18 +109,9 @@
                                             <tr>
                                               <th>م</th>
                                               <th>التاريخ</th>
-                                              <th>الوزن</th>
-                                              <th>اللون</th>
-                                              <th>نوع الخامة</th>
-                                              <th>المنتج</th>
-                                              <th>وزن القطعة جرام</th>
-                                              <th>زمن القطعة</th>
-                                              <th>عدد القطع</th>
-                                              <th>نوع القطع</th>
-                                              <th>عدد الساعات</th>
-                                              <th>حساب الساعة</th>
-                                              <th>اجمالي الحساب</th>
+                                              <th>المبلغ</th>
                                               <th>المسئول</th>
+                                              <th>المستلم</th>
                                             </tr>
                                           </thead>
                                           <tbody>
@@ -134,41 +125,10 @@
                                                 >
                                               </td>
                                               <td>
-                                                 {{x.weight}}
+                                                <i class="fas fa-dollar-sign"></i> {{x.price}}
                                               </td>
-                                              <td>
-                                                 {{x.color}}
-                                              </td>
-                                              <td>
-                                                 {{x.get_wool_type_display}}
-                                              </td>
-                                              <td>
-                                                 {{x.product}}
-                                              </td>
-                                              <td>
-                                                 {{x.product_weight}}
-                                              </td>
-                                              <td>
-                                                 {{x.product_time}}
-                                              </td>
-                                              <td>
-                                                 {{x.product_count}}
-                                              </td>
-                                              <td>
-                                                 {{x.get_product_type_display}}
-                                              </td>
-                                              <td>
-                                                 {{x.hour_count}}
-                                              </td>
-                                              <td>
-                                                 {{x.hour_price}}
-                                              </td>
-                                              <td>
-                                                 {{x.total_account}}
-                                              </td>
-                                              <td>
-                                                 {{x.admin}}
-                                              </td>
+                                              <td><i class="fas fa-user-tie"></i> {{x.admin}}</td>
+                                              <td><i class="fas fa-user"></i> {{x.recipient}}</td>
                     
                                             </tr>
                                             {% endfor %}
@@ -179,16 +139,16 @@
                                       
                                       <div style="margin-top: 10px">
                                         <div class="row">
-                                          <div class="col-lg-12">
+                                          <div class="col-lg-4">
                                             <div class="card mini-stats-wid mb-0">
                                               <div class="card-body bg-danger">
                                                 <div class="d-flex flex-wrap">
                                                   <div class="">
                                                     <h5 class="mb-2 text-light">
-                                                      اجمالي الحساب
+                                                      اجمالي المسحوبات
                                                     </h5>
                                                     <h3 class="mb-0 text-dark">
-                                                      {{ summary.sum_weight}} جنية
+                                                      {{ summary.sum_price}} جنية
                                                     </h3>
                                                   </div>
 
