@@ -22,7 +22,7 @@ class ProductList(LoginRequiredMixin, ListView):
     login_url = '/auth/login/'
     model = Product
     paginate_by = 4
-    template_name = 'Product/product_list.html'
+
 
 
     def get_queryset(self):
