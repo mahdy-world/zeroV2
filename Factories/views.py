@@ -509,10 +509,15 @@ def FactoryInSideCreate(request):
                 response = {
                 'msg' : 1
                 }
-        else:
-            response = {
-                'msg' : 0
-            }
+            else:
+                response = {
+                    'msg' : 0
+                }
+
+            prod = obj.product
+            prod.quantity += int(obj.product_count)
+            prod.save(update_fields=['quantity'])
+
         return JsonResponse(response)
         
     

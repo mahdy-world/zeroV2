@@ -1,6 +1,6 @@
 from random import randint
 from django.db import models
-
+from datetime import datetime
 from Auth.models import User
 
 # Create your models here.
@@ -49,4 +49,22 @@ class Product(models.Model):
     
     def __str__(self):
         return self.name
-    
+
+
+class ProductSellers(models.Model):
+    name = models.CharField(max_length=250, verbose_name='اسم التاجر')
+    phone = models.CharField(max_length=11, verbose_name='رقم الهاتف')
+    initial_balance_debit = models.FloatField(default=0, verbose_name='الدين الافتتاحي')
+    deleted = models.BooleanField(default=False, verbose_name='حذف')
+
+    def __str__(self):
+        return self.name
+
+
+class SellerPayments(models.Model):
+    seller = models.ForeignKey(ProductSellers, on_delete=models.CASCADE, null=True, verbose_name='التاجر')
+    paid_value = models.FloatField(default=0.0, verbose_name='القيمة المدفوعة')
+    date = models.DateTimeField(default=datetime.now(), verbose_name='التاريخ')
+
+    def __str__(self):
+        return self.seller

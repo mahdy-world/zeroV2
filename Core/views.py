@@ -8,7 +8,7 @@ from django.contrib import messages
 from Core.forms import SystemInfoForm
 from Machines.models import *
 from Core.models import SystemInformation
-from Products.models import Product
+from Products.models import *
 from SpareParts.models import SparePartsOrders
 from Factories.models import Factory
 
@@ -108,7 +108,7 @@ class FactorySearch(LoginRequiredMixin, ListView):
 class ProductSearch(LoginRequiredMixin, ListView):
     login_url = '/auth/login/'
     model = Product
-    template_name = 'Product/product_list.html'
+    template_name = 'Products/product_list.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -193,3 +193,23 @@ def Read(request):
         obj.read = True
         obj.save(update_fields=['read'])
         return HttpResponse('Updated')
+
+
+class SellerSearch(LoginRequiredMixin, ListView):
+    login_url = '/auth/login/'
+    model = ProductSellers
+    paginate_by = 6
+
+    def get_queryset(self):
+        seller = self.request.GET.get('seller')
+        queryset = self.model.objects.filter(deleted=False, name__icontains=str(seller)).order_by('-id')
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['type'] = 'list'
+        context['title'] = 'قائمة التجار'
+        context['page'] = 'active'
+        context['seller_search'] = self.request.GET.get('seller')
+        context['count'] = self.model.objects.filter(deleted=False).count()
+        return context
