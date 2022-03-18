@@ -22,6 +22,7 @@ class ProductList(LoginRequiredMixin, ListView):
     login_url = '/auth/login/'
     model = Product
     paginate_by = 6
+    template_name = 'Product/product_list.html'
 
     def get_queryset(self):
         qureyset = self.model.objects.filter(deleted=False).order_by('-id')
@@ -30,7 +31,7 @@ class ProductList(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['type'] = 'list'
-        context['title'] = 'قائمة المنتجات'
+        context['title'] = 'قائمة '
         context['page'] = 'active'
         context['count'] = self.model.objects.filter(deleted=False).count()
         return context
