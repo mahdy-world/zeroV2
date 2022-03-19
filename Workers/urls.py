@@ -20,7 +20,7 @@ urlpatterns = [
     path('payment/report/<int:pk>/', WorkerPaymentReport.as_view(), name="WorkerPaymentReport"),
     path('payment/print/<int:pk>/', PrintWorkerPayment , name="PrintWorkerPayment"),
     
-    
+     path('detail/attendance/<int:pk>', WorkerAttendances.as_view(), name="WorkerAttendances"),
     
     
 ]

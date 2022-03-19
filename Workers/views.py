@@ -341,3 +341,40 @@ def PrintWorkerPayment(request,pk):
     pdf = html.write_pdf(stylesheets=[weasyprint.CSS('static/assets/css/invoice_pdf.css')], presentational_hints=True)
     response = HttpResponse(pdf, content_type='application/pdf')
     return response    
+
+
+
+class WorkerAttendances(LoginRequiredMixin, DetailView):
+    login_url = '/auth/login/'
+    model = Worker
+    template_name = 'Worker/worker_attendance.html'
+    
+    def get_context_data(self, **kwargs):
+        queryset = WorkerAttendance.objects.filter(worker=self.object)
+        # payment_sum = queryset.aggregate(price=Sum('price')).get('price')
+        context = super().get_context_data(**kwargs)
+        context['worker'] = queryset.order_by('-id')
+        # context['payment_sum'] = payment_sum
+        context['title'] = 'حضور العامل: ' + str(self.object)
+        context['form'] = WorkerAttendanceForm(self.request.POST or None)
+        context['type'] = 'list'
+        return context
+    
+    
+# class WorkerAttendance_div(LoginRequiredMixin, DetailView):
+#     login_url = '/auth/login/'
+#     model = Worker
+#     template_name = 'Worker/worker_payment_div.html'
+    
+#     def get_context_data(self, **kwargs):
+#         queryset = WorkerPayment.objects.filter(worker=self.object).order_by('-id')
+#         payment_sum = queryset.aggregate(price=Sum('price')).get('price')
+        
+        
+#         context = super().get_context_data(**kwargs)
+#         context['payment'] = queryset.order_by('-id')
+#         context['payment_sum'] = payment_sum
+#         context['title'] = 'مسحوبات العامل: ' + str(self.object)
+#         context['form'] = WorkerPaymentForm(self.request.POST or None)
+#         context['type'] = 'list'
+#         return context

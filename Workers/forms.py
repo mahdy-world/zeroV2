@@ -1,3 +1,4 @@
+from datetime import datetime
 from django import forms
 from .models import *
 
@@ -54,3 +55,16 @@ class WorkerPaymentReportForm(forms.Form):
         )     
 
 
+class WorkerAttendanceForm(forms.ModelForm):
+    class Meta:
+        fields = ['date', 'hour_count']
+        model = WorkerAttendance
+        widgets = {
+            'date' : forms.TextInput(attrs={'type':'date', 'class':'form-control',  'placeholder':'تاريخ السحب...', 'id':'date'}),
+            'hour_count' : forms.Select(attrs={'class':'form-control',  'placeholder':'عدد الساعات...', 'id':'hour_count'}),
+        }
+        
+        
+    def __init__(self, *args, **kwargs):
+        super(WorkerAttendanceForm, self).__init__(*args, **kwargs)
+        self.fields['date'].empty_label = datetime.today
