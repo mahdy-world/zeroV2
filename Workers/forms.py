@@ -30,7 +30,6 @@ class WorkerPaymentForm(forms.ModelForm):
         model = WorkerPayment
         widgets = {
             'date' : forms.TextInput(attrs={'type':'date', 'class':'form-control',  'placeholder':'تاريخ السحب...', 'id':'date'}),
-            'worker' : forms.Select(attrs={'class':'form-control',  'placeholder':'المسئول...', 'id':'admin'}),
             'price' : forms.NumberInput(attrs={ 'class':'form-control', 'placeholder':'المبلغ...', 'id':'price'}),
             'admin' : forms.Select(attrs={'class':'form-control',  'placeholder':'المستلم...', 'id':'recipient', 'id':'admin'}),
         }
@@ -61,10 +60,8 @@ class WorkerAttendanceForm(forms.ModelForm):
         model = WorkerAttendance
         widgets = {
             'date' : forms.TextInput(attrs={'type':'date', 'class':'form-control',  'placeholder':'تاريخ السحب...', 'id':'date'}),
-            'hour_count' : forms.Select(attrs={'class':'form-control',  'placeholder':'عدد الساعات...', 'id':'hour_count'}),
+            'hour_count' : forms.Select(attrs={'class':'form-control',  'placeholder':'عدد الساعات...', 'id':'hours_count'}),
         }
         
         
-    def __init__(self, *args, **kwargs):
-        super(WorkerAttendanceForm, self).__init__(*args, **kwargs)
-        self.fields['date'].empty_label = datetime.today
+   

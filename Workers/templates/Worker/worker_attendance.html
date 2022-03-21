@@ -94,7 +94,7 @@
                           <th class="col-lg-2 col-xl-2 col-md-2">
                             <button
                               style="width: 100%"
-                              onclick="PaymentCreate()"
+                              onclick="attenCreate()"
                               class="btn btn-success"
                             >
                             <i class="fas fa-plus-circle"></i>
@@ -125,7 +125,7 @@
                   }
                 </style>
 
-                <div class="card-body" id="paymnet">
+                <div class="card-body" id="attendance">
                   <div class="table-responsive">
                     <table
                       class="table table-centered table-dark table-nowrap text-center"
@@ -189,10 +189,10 @@
                             <div class="d-flex flex-wrap">
                               <div class="">
                                 <h5 class="mb-2 text-light">
-                                  اجمالي المسحوبات
+                                  اجمالي الايام
                                 </h5>
                                 <h3 class="mb-0 text-dark">
-                                  {{payment_sum}} جنية
+                                  {{days_count}} يوم
                                 </h3>
                               </div>
 
@@ -213,28 +213,26 @@
                 </div>
 
                 <script>
-                  function PaymentCreate() {
+                  function attenCreate() {
                     $.ajax({
                       type: "POST",
-                      url: "{% url 'Workers:WorkerPaymentCreate'  %}",
+                      url: "{% url 'Workers:WorkerAttendanceCreate'  %}",
                       data: {
                         id: "{{object.id}}",
                         date: $("#date").val(),
-                        price: $("#price").val(),
-                        admin: $("#admin").val(), 
+                        hour_count: $("#hours_count").val(), 
                         csrfmiddlewaretoken: "{{ csrf_token }}",
                         dataType: "json",
                       },
                       success: function (response) {
                         /* response message */
                         if (response.msg == 1) {
-                          $("#price").val("");
-                          $("#subject").val("");
-                          $("#admin").val("");
-                          $("#paymnet")
+                          $("#date").val("");
+                          $("#hours_count").val("");
+                          $("#attendance")
                             .html("&nbsp;")
                             .load(
-                              "{% url 'Workers:WorkerPayment_div' object.id %}"
+                              "{% url 'Workers:WorkerAttendance_div' object.id %}"
                             );
                           alert("تم الاضافة بنجاح");
                         } else {

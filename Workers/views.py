@@ -1,4 +1,5 @@
 import datetime
+from itertools import count
 from django.db.models.aggregates import Sum
 from django.http import HttpResponse, JsonResponse, response
 from django.shortcuts import get_object_or_404, redirect , render
@@ -351,30 +352,64 @@ class WorkerAttendances(LoginRequiredMixin, DetailView):
     
     def get_context_data(self, **kwargs):
         queryset = WorkerAttendance.objects.filter(worker=self.object)
-        # payment_sum = queryset.aggregate(price=Sum('price')).get('price')
+        days_count = queryset.count()
         context = super().get_context_data(**kwargs)
         context['worker'] = queryset.order_by('-id')
-        # context['payment_sum'] = payment_sum
+        context['days_count'] = days_count
         context['title'] = 'حضور العامل: ' + str(self.object)
         context['form'] = WorkerAttendanceForm(self.request.POST or None)
         context['type'] = 'list'
         return context
     
     
-# class WorkerAttendance_div(LoginRequiredMixin, DetailView):
-#     login_url = '/auth/login/'
-#     model = Worker
-#     template_name = 'Worker/worker_payment_div.html'
+class WorkerAttendance_div(LoginRequiredMixin, DetailView):
+    login_url = '/auth/login/'
+    model = Worker
+    template_name = 'Worker/worker_attendance_div.html'
     
-#     def get_context_data(self, **kwargs):
-#         queryset = WorkerPayment.objects.filter(worker=self.object).order_by('-id')
-#         payment_sum = queryset.aggregate(price=Sum('price')).get('price')
+    def get_context_data(self, **kwargs):
+        queryset = WorkerAttendance.objects.filter(worker=self.object)
+        days_count = queryset.count()
+        context = super().get_context_data(**kwargs)
+        context['worker'] = queryset.order_by('-id')
+        context['days_count'] = days_count
+        context['title'] = 'حضور العامل: ' + str(self.object)
+        context['form'] = WorkerAttendanceForm(self.request.POST or None)
+        context['type'] = 'list'
+        return context
+
+
+def WorkerAttendanceCreate(request):
+    if request.is_ajax():
+        worker_id = request.POST.get('id')
+        
+        worker = Worker.objects.get(id=worker_id)
+        print(worker)
+        
+        date = request.POST.get('date')
+        print(date)
+        hour_count = request.POST.get('hour_count')
+        print(hour_count)
+        user = request.user
+        print(user)
         
         
-#         context = super().get_context_data(**kwargs)
-#         context['payment'] = queryset.order_by('-id')
-#         context['payment_sum'] = payment_sum
-#         context['title'] = 'مسحوبات العامل: ' + str(self.object)
-#         context['form'] = WorkerPaymentForm(self.request.POST or None)
-#         context['type'] = 'list'
-#         return context
+        if  date and hour_count:
+            obj = WorkerAttendance()
+            obj.worker = worker
+            obj.date = date
+            obj.hour_count = hour_count
+            obj.attend = True
+            obj.admin = user
+            obj.save()
+            
+            if obj:
+                response = {
+                    'msg' : 1
+                }
+        else:
+            response = {
+                'msg' : 0
+            }
+        return JsonResponse(response)
+    
