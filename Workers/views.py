@@ -1,4 +1,5 @@
 import datetime
+from itertools import count
 from django.db.models.aggregates import Sum
 from django.http import HttpResponse, JsonResponse, response
 from django.shortcuts import get_object_or_404, redirect , render
@@ -341,3 +342,74 @@ def PrintWorkerPayment(request,pk):
     pdf = html.write_pdf(stylesheets=[weasyprint.CSS('static/assets/css/invoice_pdf.css')], presentational_hints=True)
     response = HttpResponse(pdf, content_type='application/pdf')
     return response    
+
+
+
+class WorkerAttendances(LoginRequiredMixin, DetailView):
+    login_url = '/auth/login/'
+    model = Worker
+    template_name = 'Worker/worker_attendance.html'
+    
+    def get_context_data(self, **kwargs):
+        queryset = WorkerAttendance.objects.filter(worker=self.object)
+        days_count = queryset.count()
+        context = super().get_context_data(**kwargs)
+        context['worker'] = queryset.order_by('-id')
+        context['days_count'] = days_count
+        context['title'] = 'حضور العامل: ' + str(self.object)
+        context['form'] = WorkerAttendanceForm(self.request.POST or None)
+        context['type'] = 'list'
+        return context
+    
+    
+class WorkerAttendance_div(LoginRequiredMixin, DetailView):
+    login_url = '/auth/login/'
+    model = Worker
+    template_name = 'Worker/worker_attendance_div.html'
+    
+    def get_context_data(self, **kwargs):
+        queryset = WorkerAttendance.objects.filter(worker=self.object)
+        days_count = queryset.count()
+        context = super().get_context_data(**kwargs)
+        context['worker'] = queryset.order_by('-id')
+        context['days_count'] = days_count
+        context['title'] = 'حضور العامل: ' + str(self.object)
+        context['form'] = WorkerAttendanceForm(self.request.POST or None)
+        context['type'] = 'list'
+        return context
+
+
+def WorkerAttendanceCreate(request):
+    if request.is_ajax():
+        worker_id = request.POST.get('id')
+        
+        worker = Worker.objects.get(id=worker_id)
+        print(worker)
+        
+        date = request.POST.get('date')
+        print(date)
+        hour_count = request.POST.get('hour_count')
+        print(hour_count)
+        user = request.user
+        print(user)
+        
+        
+        if  date and hour_count:
+            obj = WorkerAttendance()
+            obj.worker = worker
+            obj.date = date
+            obj.hour_count = hour_count
+            obj.attend = True
+            obj.admin = user
+            obj.save()
+            
+            if obj:
+                response = {
+                    'msg' : 1
+                }
+        else:
+            response = {
+                'msg' : 0
+            }
+        return JsonResponse(response)
+    

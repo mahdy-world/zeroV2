@@ -36,7 +36,7 @@ HOUR_COUNT = (
 class WorkerAttendance(models.Model):
     date = models.DateField(verbose_name="تاريخ الحضور")    
     worker = models.ForeignKey(Worker, on_delete=models.CASCADE,verbose_name="العامل")    
-    hour_count = models.IntegerField(choices=HOUR_COUNT, default="12", verbose_name="العامل")
+    hour_count = models.IntegerField(choices=HOUR_COUNT,  verbose_name="عدد الساعات")
     attend = models.BooleanField(default=0, verbose_name="حضر")
     admin = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="المسئول")
     

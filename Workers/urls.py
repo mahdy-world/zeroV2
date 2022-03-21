@@ -20,7 +20,10 @@ urlpatterns = [
     path('payment/report/<int:pk>/', WorkerPaymentReport.as_view(), name="WorkerPaymentReport"),
     path('payment/print/<int:pk>/', PrintWorkerPayment , name="PrintWorkerPayment"),
     
-    
+    path('detail/attendance/<int:pk>', WorkerAttendances.as_view(), name="WorkerAttendances"),
+    path('detail/attendance/<int:pk>/div/', WorkerAttendance_div.as_view(), name="WorkerAttendance_div"),
+    path('create/attendnace', WorkerAttendanceCreate, name="WorkerAttendanceCreate"),
+
     
     
 ]
