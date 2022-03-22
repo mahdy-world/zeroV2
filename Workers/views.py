@@ -373,7 +373,7 @@ class WorkerAttendance_div(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['worker'] = queryset.order_by('-id')
         context['days_count'] = days_count
-        context['title'] = 'حضور العامل: ' + str(self.object)
+        context['title'] = 'حضور العامل : ' + str(self.object)
         context['form'] = WorkerAttendanceForm(self.request.POST or None)
         context['type'] = 'list'
         return context
