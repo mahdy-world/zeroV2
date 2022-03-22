@@ -25,5 +25,4 @@ urlpatterns = [
     path('create/attendnace', WorkerAttendanceCreate, name="WorkerAttendanceCreate"),
 
     
-    
 ]
