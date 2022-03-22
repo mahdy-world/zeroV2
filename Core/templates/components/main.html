@@ -279,6 +279,24 @@ background-size: cover;">
 
             {% endif %}
                 
+            {% if request.user.has_access_to_worker %}
+            <div class="col-xl-4 col-lg-6 col-md-6">
+                <a data-toggle="modal" data-target="#seller_modal">
+                    <div class="container_new">
+                        <div class="card">
+                            <div class="imgBx">
+                                <img class="image" src="/static/assets/images/vector/seller.png">
+                            </div>
+                            <div class="contentBx">
+                                <h2>التجار</h2>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            {% endif %}
+                
 
                 <div class="col-xl-4 col-lg-6 col-md-6">
                     <a data-toggle="modal" data-target="#search_modal">

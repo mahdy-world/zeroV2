@@ -787,7 +787,7 @@
                 </div>
             </div>
             
-            <!-- Product -->
+            <!-- Workers -->
             <div class="modal fade"  data-backdrop="static" id="worker_modal">
                 <div class="modal-dialog modal-xl" style="background: #3f3f3f;">
                     <div class="modal-content" style="background: #3f3f3f;">
@@ -857,6 +857,99 @@
 
                                             <div class="col-xl-4 col-lg-6 col-md-6">
                                                 <a  href="{% url 'Products:ProductTrachList' %}" >
+                                                    <div class="container_new">
+                                                        <div class="card">
+                                                        <div class="imgBx">
+                                                            <img class="image" src="/static/assets/images/vector/trach.png">
+                                                        </div>
+                                                        <div class="contentBx">
+                                                            <h2>سلة المهملات </h2>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </a> 
+                                            </div>
+                                        
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- sellers -->
+            <div class="modal fade"  data-backdrop="static" id="seller_modal">
+                <div class="modal-dialog modal-xl" style="background: #3f3f3f;">
+                    <div class="modal-content" style="background: #3f3f3f;">
+                        <div class="row">
+                            <div class="col-lg-12" >
+                                <div class="card" style="background: #3f3f3f;">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <b class="font-weight-bold text-center">اقسام التجار</b>
+                                        </div>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="maximize" onclick="
+                                                    if (document.getElementById('expand_modal').value === '0'){
+                                                        document.getElementById('expand_modal').value = 1;
+                                                        document.getElementById('action_modal2').className = 'modal-dialog expand_modal';
+                                                        document.getElementById('sub_modal2').className = 'modal-dialog modal-lg expand_modal';
+                                                    }
+                                                    else {
+                                                        document.getElementById('expand_modal').value = 0;
+                                                        document.getElementById('action_modal2').className = 'modal-dialog';
+                                                        document.getElementById('sub_modal2').className = 'modal-dialog modal-lg';
+                                                    }
+                        
+                                                    ">
+                                                <input type="number" value="0" id="expand_modal" hidden />
+                                                <i class="fas fa-expand"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool" data-dismiss="modal">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                
+                                    <div class="card-body" style="background: #3f3f3f;">
+                                        <div class="row">
+                                            <div class="col-xl-4 col-lg-6 col-md-6">
+                                                <a href="{% url 'Products:SellerList' %}"> 
+                                                    <div class="container_new">
+                                                        <div class="card">
+                                                        <div class="imgBx">
+                                                            <img class="image" src="/static/assets/images/vector/seller.png">
+                                                        </div>
+                                                        <div class="contentBx">
+                                                            <h2>قائمة التجار</h2>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </a>  
+                                            </div>
+                            
+                            
+                                            <div class="col-xl-4 col-lg-6 col-md-6">
+                                                <a  href="{% url 'Products:SellerCreate' %}" data-target="#sub_modal" data-toggle="modal">
+                                                    <div class="container_new">
+                                                        <div class="card">
+                                                        <div class="imgBx">
+                                                            <img class="image" src="/static/assets/images/vector/new.png">
+                                                        </div>
+                                                        <div class="contentBx">
+                                                            <h2>اضافة تاجر جديد</h2>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </a> 
+                                            </div>
+
+                                            <div class="col-xl-4 col-lg-6 col-md-6">
+                                                <a  href="{% url 'Products:SellerTrashList' %}" >
                                                     <div class="container_new">
                                                         <div class="card">
                                                         <div class="imgBx">
