@@ -413,3 +413,107 @@ def WorkerAttendanceCreate(request):
             }
         return JsonResponse(response)
     
+class WorkerAttendancesUpdate(LoginRequiredMixin, UpdateView):
+    login_url = '/auth/login/'
+    model = WorkerAttendance
+    form_class = WorkerAttendanceForm
+    template_name = 'forms/form_template.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'تعديل حضور  : ' + str(self.object)
+        context['message'] = 'update'
+        context['action_url'] = reverse_lazy('Workers:WorkerAttendancesUpdate', kwargs={'pk': self.object.id})
+        return context 
+    
+    def get_success_url(self):
+        messages.success(self.request, " تم تعديل الحضور " + str(self.object) + " بنجاح ", extra_tags="success")
+        if self.request.POST.get('url'):
+            return self.request.POST.get('url')
+        else:
+            return self.success_url
+    
+
+
+def WorkerAttendanceDelete(request):
+    if request.is_ajax():
+        attendance_id = request.POST.get('attendance_id')
+        obj =  WorkerAttendance.objects.get(id=attendance_id)
+        obj.delete()
+        
+        if obj:
+            response = {
+                'msg' : 'Send Successfully'
+            }
+
+        return JsonResponse(response)    
+            
+
+class WorkerAttendanceReport(LoginRequiredMixin, ListView):
+    login_url = '/auth/login/'
+    model = WorkerAttendance
+    form = WorkerPaymentReportForm()
+    template_name = 'Worker_Reports/worker_attendance_report.html'
+    
+   
+    def queryset(self):
+        if not self.request.GET.get('submit'):
+            queryset = None
+        else:
+            queryset = WorkerAttendance.objects.filter(worker = self.kwargs['pk']).order_by('-id')
+            if self.request.GET.get('from_date'):
+                queryset = queryset.filter(date__gte = self.request.GET.get('from_date'))
+            if self.request.GET.get('to_date'):
+                queryset = queryset.filter(date__lte = self.request.GET.get('to_date'))
+                                  
+        return queryset 
+    
+    def get_count_days(self):
+        queryset = self.queryset()
+        if queryset != None:
+            count_days =  queryset.count()
+        else:
+            count_days = 0
+        total = {
+            'count_days' :count_days
+        }
+        return total
+    
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.form
+        context['summary'] = self.get_count_days()
+        context['name'] = Worker.objects.get(id=self.kwargs['pk'])
+        return context
+    
+    
+def PrintWorkerAttendance(request,pk):
+    worker = Worker.objects.get(id=pk)
+    system_info = SystemInformation.objects.all()
+    if system_info.count() > 0:
+        system_info = system_info.last()
+    else:
+        system_info = None
+            
+    queryset = WorkerAttendance.objects.filter(worker=pk).order_by('-id')
+    if request.GET.get('from_date'):
+        queryset = queryset.filter(date__gte = request.GET.get('from_date'))
+    if request.GET.get('to_date'):
+        queryset = queryset.filter(date__lte = request.GET.get('to_date'))
+    
+   
+    context = {
+        'queryset':queryset,
+        'count_days':  queryset.count,
+        'system_info':system_info,
+        'date': datetime.now(),
+        'user': request.user.username,
+        'from_date': request.GET.get('from_date'),
+        'to_date': request.GET.get('to_date'),
+        'worker':worker,
+    }
+    html_string = render_to_string('Worker_Reports/print_worker_attendance.html', context)
+    html = weasyprint.HTML(string=html_string, base_url=request.build_absolute_uri())
+    pdf = html.write_pdf(stylesheets=[weasyprint.CSS('static/assets/css/invoice_pdf.css')], presentational_hints=True)
+    response = HttpResponse(pdf, content_type='application/pdf')
+    return response      

@@ -29,7 +29,7 @@
               {% if request.user.is_superuser %}
               <td>
               <a
-                  href="{% url 'Workers:WorkerPaymentUpdate' x.id %}"
+                  href="{% url 'Workers:WorkerAttendancesUpdate' x.id %}"
                   class="mr-3 text-warning"
                   data-toggle="modal"
                   data-target="#action_modal"
@@ -37,7 +37,7 @@
                   ><i class="mdi mdi-pencil font-size-18"></i
               ></a>
               <a
-                  onclick="WorkerPaymentDelete('{{x.id}}')"
+                  onclick="WorkerAttendanceDelete('{{x.id}}')"
                   style="cursor: pointer"
                   class="text-danger"
                   ><i class="mdi mdi-close font-size-18"></i
@@ -55,7 +55,7 @@
 <div style="margin-top: 10px">
   <div class="row">
    
-    <div class="col-lg-4">
+    <div class="col-lg-4 flex-center">
       <div class="card mini-stats-wid mb-0">
         <div class="card-body bg-danger">
           <div class="d-flex flex-wrap">
@@ -81,4 +81,5 @@
     </div>
 
   </div>
+</div>
 </div>

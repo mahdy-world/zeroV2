@@ -101,7 +101,7 @@
                             </button>
                           </th>
                           <th class="col-lg-2 col-xl-1 col-md-2">
-                            <a href="{% url 'Workers:WorkerPaymentReport' object.id %}"
+                            <a href="{% url 'Workers:WorkerAttendanceReport' object.id %}"
                               style="width: 100%"
                               class="btn btn-primary"
                               target='_blank'
@@ -156,7 +156,7 @@
                                 {% if request.user.is_superuser %}
                                 <td>
                                 <a
-                                    href="{% url 'Workers:WorkerPaymentUpdate' x.id %}"
+                                    href="{% url 'Workers:WorkerAttendancesUpdate' x.id %}"
                                     class="mr-3 text-warning"
                                     data-toggle="modal"
                                     data-target="#action_modal"
@@ -164,7 +164,7 @@
                                     ><i class="mdi mdi-pencil font-size-18"></i
                                 ></a>
                                 <a
-                                    onclick="WorkerPaymentDelete('{{x.id}}')"
+                                    onclick="WorkerAttendanceDelete('{{x.id}}')"
                                     style="cursor: pointer"
                                     class="text-danger"
                                     ><i class="mdi mdi-close font-size-18"></i
@@ -182,7 +182,7 @@
                   <div style="margin-top: 10px">
                     <div class="row">
                      
-                      <div class="col-lg-4">
+                      <div class="col-lg-4 flex-center">
                         <div class="card mini-stats-wid mb-0">
                           <div class="card-body bg-danger">
                             <div class="d-flex flex-wrap">
@@ -243,21 +243,21 @@
                     });
                   }
 
-                  function WorkerPaymentDelete(payment_id) {
+                  function WorkerAttendanceDelete(attendance_id) {
                     $.ajax({
                       type: "POST",
-                      url: "{% url 'Workers:WorkerPaymentDelete' %}",
+                      url: "{% url 'Workers:WorkerAttendanceDelete' %}",
                       data: {
-                        payment_id: payment_id,
+                        attendance_id: attendance_id,
                         csrfmiddlewaretoken: "{{ csrf_token }}",
                         dataType: "json",
                       },
                       success: function (data) {
                         /* response message */
-                        $("#paymnet")
+                        $("#attendance")
                           .html("&nbsp;")
                           .load(
-                            "{% url 'Workers:WorkerPayment_div' object.id %}"
+                            "{% url 'Workers:WorkerAttendance_div' object.id %}"
                           );
                         alert("تم الحذف بنجاح");
                       },

@@ -388,10 +388,6 @@
                {% endif %}
                    
                    
-                   
-                
-               
-
                 <li class="menu-title" key="t-menu">التحويلات والمعاملات المالية</li>
 
                 
@@ -476,24 +472,21 @@
                             <i class="bx bx-cog bx-sm" ></i>
                             <span key="t-ecommerce"> اعدادات المستخدمين  </span>
                         </a>
-                        <ul class="sub-menu bg-light" aria-expanded="false">
-                            
-                            <li><a href="{% url 'Auth:Users' %}"
-                                data-target="#sub_modal" data-toggle="modal"
-                                key="t-products"><i class='bx bx-list-ul' ></i>
-                                قائمة المستخدمين </a>
-                            </li>
+                            <ul class="sub-menu bg-light" aria-expanded="false">
                                 
-                                
-                                {% if request.user.is_superuser  %}
-                                <li><a href="{% url 'Auth:create_user' %}" data-target="#sub_modal" data-toggle="modal"> <i class='bx bxs-add-to-queue'></i>
-                                    اضافة مستخدم جديد</a></li>        
-                                    {% endif %}
-                                    
-                                    
-                                    
-                                    
-                                </ul>
+                                <li><a href="{% url 'Auth:Users' %}"
+                                    data-target="#sub_modal" data-toggle="modal"
+                                    key="t-products"><i class='bx bx-list-ul' ></i>
+                                    قائمة المستخدمين </a>
+                                </li>
+                                    {% if request.user.is_superuser  %}
+                                    <li>
+                                        <a href="{% url 'Auth:create_user' %}" data-target="#sub_modal" data-toggle="modal">
+                                        <i class='bx bxs-add-to-queue'></i>
+                                        اضافة مستخدم جديد</a>
+                                    </li>        
+                                        {% endif %}  
+                            </ul>
                     </li>
                 {% endif %}
             </ul>
