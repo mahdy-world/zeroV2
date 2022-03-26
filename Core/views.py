@@ -11,6 +11,7 @@ from Core.models import SystemInformation
 from Products.models import *
 from SpareParts.models import SparePartsOrders
 from Factories.models import Factory
+from Workers.models import Worker
 
 # Create your views here.
 
@@ -121,6 +122,26 @@ class ProductSearch(LoginRequiredMixin, ListView):
     def get_queryset(self):
         product_serach = self.request.GET.get("product")  
         queryset = self.model.objects.filter(name__icontains=product_serach, deleted=False)
+        return queryset
+    
+    
+    
+class WorkerSearch(LoginRequiredMixin, ListView):
+    login_url = '/auth/login/'
+    model = Worker
+    template_name = 'Worker/worker_list.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['message'] = 'active'
+        context['page'] = 'active'
+        context['type'] = 'list'
+        context['count'] = self.model.objects.filter(deleted=False).count()
+        return context
+    
+    def get_queryset(self):
+        worker_serach = self.request.GET.get("worker")  
+        queryset = self.model.objects.filter(name__icontains=worker_serach, deleted=False)
         return queryset
 
 

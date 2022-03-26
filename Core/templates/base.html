@@ -1085,6 +1085,54 @@
                             
                                                 </div>
                                                 {% endif %}
+
+                                                {% if request.user.has_access_to_products %}
+                                                <div class="col-lg-6">
+                                                    <span style="margin-right: 10px;" class="font-weight-bold">بحث عن تاجر ...</span>
+                                                    <form class="app-search d-none d-lg-block" method="get" action="{% url 'Core:SellerSearch' %}">
+                                                        <div class="position-relative" >
+                                                            
+                                                            <input type="text" value="{{seller_serach}}" list="sel"  class="form-control" name="seller" placeholder="بحث ... بإسم المنتج">
+                                                            <span >
+                                                                <button class="bx bx-search-alt btn btn-light" type="submit">
+                                                                </button>
+                                                            </span>
+                                                            <datalist id="sel" >
+                                                                {% for pro in sellers %}
+                                                                    <option value="{{ pro.name }}">
+                                                                        {{ pro.name }}
+                                                                        </option>
+                                                                {% endfor %}
+                                                    </datalist>
+                                                        </div>
+                                                    </form>
+                            
+                                                </div>
+                                                {% endif %}
+
+                                                {% if request.user.has_access_to_products %}
+                                                <div class="col-lg-6">
+                                                    <span style="margin-right: 10px;" class="font-weight-bold">بحث عن عامل ...</span>
+                                                    <form class="app-search d-none d-lg-block" method="get" action="{% url 'Core:WorkerSearch' %}">
+                                                        <div class="position-relative" >
+                                                            
+                                                            <input type="text" value="{{worker_serach}}" list="work"  class="form-control" name="worker" placeholder="بحث ... بإسم المنتج">
+                                                            <span >
+                                                                <button class="bx bx-search-alt btn btn-light" type="submit">
+                                                                </button>
+                                                            </span>
+                                                            <datalist id="work" >
+                                                                {% for pro in workers %}
+                                                                    <option value="{{ pro.name }}">
+                                                                        {{ pro.name }}
+                                                                        </option>
+                                                                {% endfor %}
+                                                    </datalist>
+                                                        </div>
+                                                    </form>
+                            
+                                                </div>
+                                                {% endif %}
                                                
 
 
