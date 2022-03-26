@@ -3,11 +3,13 @@ from itertools import product
 from django.http import request
 from Core.models import SystemInformation
 from Factories.models import Factory
-from Products.models import Product
+from Products.models import Product, ProductSellers
 from SpareParts.models import *
 from Machines.models import * 
 from django.utils import timezone as tz
 from django.db.models import Q
+
+from Workers.models import Worker
 
 
 
@@ -19,6 +21,8 @@ def allcontext(request):
     spare_order = SparePartsOrders.objects.filter(deleted=False)
     machine_order = MachinesOrders.objects.filter(deleted=False)
     products = Product.objects.filter(deleted=False)
+    sellers = ProductSellers.objects.filter(deleted=False)
+    workers = Worker.objects.filter(deleted=False)
     
     
     
@@ -52,7 +56,9 @@ def allcontext(request):
         'spareparts_count' : spareparts_count,
         'machines_supplier' : machines_supplier,
         'factorys' : factorys,
-        'products':products
+        'products':products,
+        'sellers':sellers,
+        'workers':workers,
         
 
     }
