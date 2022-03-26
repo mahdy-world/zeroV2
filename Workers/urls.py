@@ -22,7 +22,13 @@ urlpatterns = [
     
     path('detail/attendance/<int:pk>', WorkerAttendances.as_view(), name="WorkerAttendances"),
     path('detail/attendance/<int:pk>/div/', WorkerAttendance_div.as_view(), name="WorkerAttendance_div"),
+    path('update/attendance/<int:pk>/', WorkerAttendancesUpdate.as_view(), name="WorkerAttendancesUpdate"),
     path('create/attendnace', WorkerAttendanceCreate, name="WorkerAttendanceCreate"),
+    path('delete/attendnace', WorkerAttendanceDelete, name="WorkerAttendanceDelete"),
+    path('report/attendance/<int:pk>/', WorkerAttendanceReport.as_view(), name="WorkerAttendanceReport"),
+    path('attendance/print/<int:pk>/', PrintWorkerAttendance , name="PrintWorkerAttendance"),
+
+
 
     
 ]

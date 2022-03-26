@@ -1,8 +1,10 @@
 {% extends "base.html" %}
+
 {% block title %}
-<title>تقارير مسحوبات {{name}}</title>
+<title>تقارير حضور {{name}}</title>
 
 {% endblock title %}
+
 
 {% block css %}
 
@@ -46,7 +48,7 @@
                                               style="color: white"
                                             >
                                             <i class="fas fa-file-alt"></i>
-                                              تقارير مسحوبات العامل : <span class="badge badge-danger"> {{name}}</span>
+                                              تقارير حضور العامل : <span class="badge badge-danger"> {{name}}</span>
                                             </h3>
                                           </div>
                                         </div>
@@ -82,7 +84,7 @@
 
                                               <th>
                                                 <button type="submit" name="submit" id="print"  value="1" class="btn btn-primary"
-                                                onclick="document.getElementById('my_form').action = '{% url 'Workers:PrintWorkerPayment' name.id  %}'; document.getElementById('my_form').target = '_blank' "
+                                                onclick="document.getElementById('my_form').action = '{% url 'Workers:PrintWorkerAttendance' name.id  %}'; document.getElementById('my_form').target = '_blank' "
                                                 >  
                                                 <i class="fas fa-print"></i> 
                                                   طباعة
@@ -112,9 +114,8 @@
                                             <tr>
                                               <th>م</th>
                                               <th>التاريخ</th>
-                                              <th>المبلغ</th>
+                                              <th>عدد الساعات</th>
                                               <th>المسئول</th>
-                                              <th>المستلم</th>
                                             </tr>
                                           </thead>
                                           <tbody>
@@ -128,10 +129,9 @@
                                                 >
                                               </td>
                                               <td>
-                                                <i class="fas fa-dollar-sign"></i> {{x.price}}
+                                                 {{x.get_hour_count_display}} ساعة
                                               </td>
                                               <td><i class="fas fa-user-tie"></i> {{x.admin}}</td>
-                                              <td><i class="fas fa-user"></i> {{x.recipient}}</td>
                     
                                             </tr>
                                             {% endfor %}
@@ -148,10 +148,10 @@
                                                 <div class="d-flex flex-wrap">
                                                   <div class="">
                                                     <h5 class="mb-2 text-light">
-                                                      اجمالي المسحوبات
+                                                      اجمالي الايام
                                                     </h5>
                                                     <h3 class="mb-0 text-dark">
-                                                      {{ summary.sum_price}} جنية
+                                                      {{ summary.count_days}} يوم
                                                     </h3>
                                                   </div>
 
@@ -159,7 +159,7 @@
                                                     <div
                                                       class="avatar-title bg-light rounded-circle text-dark font-size-20"
                                                     >
-                                                      <i class="fas fa-hand-holding-usd"></i>
+                                                    <i class="fas fa-clock"></i>
                                                     </div>
                                                   </div>
                                                 </div>

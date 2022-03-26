@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% block title %}
+<title>قائمة المنتجات</title>
+
+{% endblock title %}
+
 
 {% block main %}
     <div class="main-content">
@@ -92,7 +97,7 @@
                                 <form class="mt-4 mt-sm-0 float-sm-right form-inline">
                                     <div class="search-box mr-2">
                                         <div class="position-relative">
-                                            <form class="app-search d-none d-lg-block" method="get" autocomplete="off" action="{% url 'Core:ProductSearch' %}">
+                                            <form class="app-search d-none d-lg-block" method="get"  action="{% url 'Core:ProductSearch' %}">
                                                 <div class="position-relative" >
 
                                                     <input type="text" value="{{product_serach}}" list="produ"  class="form-control border-0" style="border-radius: 0" name="product" placeholder="بحث ... بإسم المنتج">
@@ -100,7 +105,7 @@
                                                         <button class="bx bx-search-alt btn btn-warning" style="border-radius: 0" type="submit"></button>
                                                     </span>
                                                     <datalist id="produ" >
-                                                        {% for pro in object_list %}
+                                                        {% for pro in products %}
                                                             <option value="{{ pro.name }}">
                                                                 {{ pro.name }}
                                                                 </option>
